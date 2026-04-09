@@ -215,11 +215,11 @@ const RD_LABELS = {1:'Round 1 · Thu Apr 9',2:'Round 2 · Fri Apr 10',3:'Round 3
 
 // Masters.com official leaderboard API + ESPN fallback
 const MASTERS_API = 'https://www.masters.com/en_US/scores/feeds/2026/scores.json';
-const ESPN_API = 'https://site.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard?tournamentId=401811941';
-const CORS_PROXIES = [
-  'https://corsproxy.io/?',
-  'https://api.allorigins.win/raw?url=',
-  'https://thingproxy.freeboard.io/fetch/',
+// ESPN correct scoreboard — fetches currently active PGA tournament
+const ESPN_URLS = [
+  'https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard',
+  'https://site.web.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard?tournamentId=401811941',
+  'https://site.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard',
 ];
 
 const MASTERS_FIELD = [
@@ -277,52 +277,56 @@ async function fetchESPN(){
   let parsed=false;
   let debugLog=[];
 
-  const attempts=[
-    'https://api.allorigins.win/raw?url='+encodeURIComponent(ESPN_API),
-    'https://corsproxy.io/?'+encodeURIComponent(ESPN_API),
-    'https://thingproxy.freeboard.io/fetch/'+ESPN_API,
-    ESPN_API,
-  ];
+  // allorigins is the only proxy that connects — build all attempts with it
+  const attempts=[];
+  for(const espnUrl of ESPN_URLS){
+    attempts.push('https://api.allorigins.win/raw?url='+encodeURIComponent(espnUrl));
+  }
+  // Also try Masters.com via allorigins
+  attempts.push('https://api.allorigins.win/raw?url='+encodeURIComponent(MASTERS_API));
+  // Try direct as last resort
+  for(const espnUrl of ESPN_URLS) attempts.push(espnUrl);
 
   for(const url of attempts){
     if(parsed)break;
-    const shortUrl=url.substring(0,50)+'...';
+    const shortUrl=url.substring(0,70)+'...';
     try{
-      const r=await fetch(url,{headers:{'Accept':'application/json'}});
-      debugLog.push(`✓ Connected: ${shortUrl} → status ${r.status}`);
+      const r=await fetch(url);
+      debugLog.push(`✓ ${r.status}: ${shortUrl}`);
       if(r.ok){
-        const j=await r.json();
+        const text=await r.text();
+        let j;
+        try{j=JSON.parse(text);}catch(e){debugLog.push(`  Parse error: ${e.message}`);continue;}
         const topKeys=Object.keys(j).join(', ');
         debugLog.push(`  Keys: ${topKeys}`);
-        if(j&&j.events&&j.events.length>0){
-          const comp=j.events[0]?.competitions?.[0]?.competitors?.[0];
-          const name=comp?.athlete?.displayName||'?';
-          const score=comp?.score;
-          const linescores=JSON.stringify(comp?.linescores?.slice(0,2));
-          const stats=JSON.stringify(comp?.statistics?.slice(0,2));
-          debugLog.push(`  First player: ${name}`);
-          debugLog.push(`  score field: ${score}`);
-          debugLog.push(`  linescores: ${linescores}`);
-          debugLog.push(`  statistics: ${stats}`);
+
+        // Masters.com format
+        if(j.data&&j.data.player){
+          parseMasters(j);parsed=true;
+          debugLog.push(`  ✅ Masters.com parsed OK! ${Object.keys(espnData).length} players`);
+          break;
+        }
+        // ESPN scoreboard format
+        if(j.events&&j.events.length>0){
           window._lastESPNRaw=j;
-          parseESPN(j);
-          parsed=true;
-        } else {
-          debugLog.push(`  No events array found`);
+          const comp=j.events[0]?.competitions?.[0]?.competitors?.[0];
+          debugLog.push(`  First player: ${comp?.athlete?.displayName}, score: ${comp?.score}, linescores: ${JSON.stringify(comp?.linescores?.slice(0,1))}, stats: ${JSON.stringify(comp?.statistics?.slice(0,2))}`);
+          parseESPN(j);parsed=true;
+          debugLog.push(`  ✅ ESPN parsed OK! ${Object.keys(espnData).length} players`);
+          break;
+        }
+        // ESPN leaderboard format (different structure)
+        if(j.leaderboard||j.competitors||j.golfers){
+          debugLog.push(`  Different ESPN format — keys: ${topKeys}`);
         }
       }
     }catch(e){
-      debugLog.push(`✗ Failed: ${shortUrl} → ${e.message}`);
+      debugLog.push(`✗ ${shortUrl}: ${e.message}`);
     }
   }
 
-  // Show debug info on page
   const debugEl=document.getElementById('debug-output');
-  if(debugEl){
-    debugEl.style.display='block';
-    debugEl.textContent=debugLog.join('\n');
-  }
-
+  if(debugEl){debugEl.style.display='block';debugEl.textContent=debugLog.join('\n');}
   if(!parsed) document.querySelectorAll('.stxt').forEach(el=>el.textContent='Score fetch failed — see debug below');
   lastFetch=new Date();
   for(let r=1;r<=4;r++)renderRound(r);
