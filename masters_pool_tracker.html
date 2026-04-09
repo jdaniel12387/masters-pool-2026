@@ -1,0 +1,874 @@
+﻿2023-08-01 20:09:27> Program: Starting Squirrel Updater: --install . --noui --intentOverride=work --acquireSource=exe_store --exeName=MSTeamsSetupx64.exe --bootstrapperMode
+2023-08-01 20:09:27> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2023-08-01 20:09:27> RegistryService: TrySetRegKey: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams\AcquireSource created
+2023-08-01 20:09:27> RegistryService: TrySetRegKey: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams\AcquireSource set successfully as exe_store
+2023-08-01 20:09:27> Program: AcquireSource reg is set to exe_store
+2023-08-01 20:09:28> LogHost: Write failed.
+2023-08-01 20:09:28> LogHost: Message: Scenario.Status: success, scenario: 8835b876-f9c9-4914-b50b-dbd3f4fd2313, Scenario.Name: desktop_squirrel_stubinstall, Scenario.Step: start, sequence: 0, appversion: , platformId: 27, DeviceInfo.OsName: Windows, DeviceInfo.CpuArchitecture: x64, DeviceInfo.OsVersion: 10.0.22621.0, AppInfo.ProcessArchitecture: x86, AppInfo.ClientType: desktop, dllSearchPathState: unset, clientType: desktop, source: exe, distSrc: default, breadcrumb: , SignedPackages: enabled, AcquireSource: exe_store, desktopSession: desktop-97f2f598-01ae-4d4d-ba77-1cdcc7eb0623, installSessionId: 16c03984c235a0ef8e082bac16cd79ba269b0a68bf647abc7e2537d7b380987a, delta: 15, scenarioDelta: 15, elapsed: 1690938567855, stepDelta: 0, DeviceInfo.ComputerUuid: d36672790f49489cbab0899a469b74d4, DeviceInfo.OfficeMachineId: 2d1b0092f7f2344e88ac80593f331e28, InstallerVersion: 3.2.3.0, eventpdclevel: 1, userpdclevel: 0
+2023-08-01 20:09:28> LogHost: Stack trace: System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\Users\jerem\AppData\Roaming\Microsoft\Teams\SquirrelTelemetry.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append)
+   at Telemetry.AriaWrapper.LogToFile(String message)
+2023-08-01 20:09:28> Program: bootStrapperModeSettings: pdsEndpoint:https://teams.microsoft.com/desktopclient/installer/windows/
+2023-08-01 20:09:28> Program: bootStrapperModeSettings: fallbackNextGenAppPayloadUrlX64:https://aka.ms/maglev-x64
+2023-08-01 20:09:28> Program: bootStrapperModeSettings: fallbackNextGenAppPayloadUrlX86:https://aka.ms/maglev-x86
+2023-08-01 20:09:28> Program: bootStrapperModeSettings: fallbackNextGenAppPayloadUrlARM64:https://aka.ms/maglev-arm64
+2023-08-01 20:09:28> Program: bootStrapperModeSettings: getInstallerEndpointUrl:https://teams.live.com/downloads/getinstaller
+2023-08-01 20:09:28> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\CurrentBuildNumber exists. Data - 22621
+2023-08-01 20:09:28> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\CurrentMajorVersionNumber exists. Data - 10
+2023-08-01 20:09:28> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\CurrentMinorVersionNumber exists. Data - 0
+2023-08-01 20:09:28> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\CurrentBuildNumber exists. Data - 22621
+2023-08-01 20:09:28> LogHost: Write failed.
+2023-08-01 20:09:28> LogHost: Message: DownloadUrlRetry: 0, endpointUrl: https://teams.live.com/downloads/getinstaller?intent=Work&arch=x64&platVersion=10.0.22621, Scenario.Status: success, scenario: 8835b876-f9c9-4914-b50b-dbd3f4fd2313, Scenario.Name: desktop_squirrel_stubinstall, Scenario.Step: download_url_start, sequence: 1, appversion: , platformId: 27, DeviceInfo.OsName: Windows, DeviceInfo.CpuArchitecture: x64, DeviceInfo.OsVersion: 10.0.22621.0, AppInfo.ProcessArchitecture: x86, AppInfo.ClientType: desktop, dllSearchPathState: unset, clientType: desktop, source: exe, distSrc: default, breadcrumb: , SignedPackages: enabled, AcquireSource: exe_store, desktopSession: desktop-97f2f598-01ae-4d4d-ba77-1cdcc7eb0623, installSessionId: 16c03984c235a0ef8e082bac16cd79ba269b0a68bf647abc7e2537d7b380987a, delta: 475, scenarioDelta: 475, elapsed: 1690938568315, stepDelta: 460, DeviceInfo.ComputerUuid: d36672790f49489cbab0899a469b74d4, DeviceInfo.OfficeMachineId: 2d1b0092f7f2344e88ac80593f331e28, InstallerVersion: 3.2.3.0, eventpdclevel: 1, userpdclevel: 0
+2023-08-01 20:09:28> LogHost: Stack trace: System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\Users\jerem\AppData\Roaming\Microsoft\Teams\SquirrelTelemetry.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append)
+   at Telemetry.AriaWrapper.LogToFile(String message)
+2023-08-01 20:09:28> FileDownloader: Downloading url: https://teams.live.com/downloads/getinstaller?intent=Work&arch=x64&platVersion=10.0.22621
+2023-08-01 20:09:28> LogHost: Write failed.
+2023-08-01 20:09:28> LogHost: Message: DownloadUrlRetry: 0, endpointUrl: https://teams.live.com/downloads/getinstaller?intent=Work&arch=x64&platVersion=10.0.22621, sizeInBytes: 134, Scenario.Status: success, scenario: 8835b876-f9c9-4914-b50b-dbd3f4fd2313, Scenario.Name: desktop_squirrel_stubinstall, Scenario.Step: download_url_end, sequence: 2, appversion: , platformId: 27, DeviceInfo.OsName: Windows, DeviceInfo.CpuArchitecture: x64, DeviceInfo.OsVersion: 10.0.22621.0, AppInfo.ProcessArchitecture: x86, AppInfo.ClientType: desktop, dllSearchPathState: unset, clientType: desktop, source: exe, distSrc: default, breadcrumb: , SignedPackages: enabled, AcquireSource: exe_store, desktopSession: desktop-97f2f598-01ae-4d4d-ba77-1cdcc7eb0623, installSessionId: 16c03984c235a0ef8e082bac16cd79ba269b0a68bf647abc7e2537d7b380987a, delta: 901, scenarioDelta: 901, elapsed: 1690938568741, stepDelta: 426, DeviceInfo.ComputerUuid: d36672790f49489cbab0899a469b74d4, DeviceInfo.OfficeMachineId: 2d1b0092f7f2344e88ac80593f331e28, InstallerVersion: 3.2.3.0, eventpdclevel: 1, userpdclevel: 0
+2023-08-01 20:09:28> LogHost: Stack trace: System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\Users\jerem\AppData\Roaming\Microsoft\Teams\SquirrelTelemetry.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append)
+   at Telemetry.AriaWrapper.LogToFile(String message)
+2023-08-01 20:09:28> BootstrapperInstallManager: getinstaller endpoint returned installer path https://statics.teams.cdn.office.net/production-windows-x64/1.6.00.18681/
+2023-08-01 20:09:28> BootstrapperInstallManager: No decoded deep link is returned from get installer endpoint. Continue install without deep link
+2023-08-01 20:09:28> Program: setup.json does not exist
+2023-08-01 20:09:28> Program: File does not contain contextual info: MSTeamsSetupx64.exe
+2023-08-01 20:09:28> UpdateManager: using rootAppDirectory: C:\Users\jerem\AppData\Local\Microsoft\Teams
+2023-08-01 20:09:28> Program: About to install to: C:\Users\jerem\AppData\Local\Microsoft\Teams
+2023-08-01 20:09:28> Program: Setup.json exist, copying over
+2023-08-01 20:09:28> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run has TeamsMachineInstaller. Data - C:\Program Files (x86)\Teams Installer\Teams.exe --checkInstall --source=PROPLUS
+2023-08-01 20:09:28> RegistryService: TrySetRegKey: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams\InstallSource set successfully as MSI
+2023-08-01 20:09:28> CheckForUpdateImpl: Couldn't write out staging user ID, this user probably shouldn't get beta anything: System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\Users\jerem\AppData\Local\Microsoft\Teams\packages\.betaId'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
+   at System.IO.File.InternalWriteAllText(String path, String contents, Encoding encoding, Boolean checkHost)
+   at System.IO.File.WriteAllText(String path, String contents, Encoding encoding)
+   at Squirrel.UpdateManager.CheckForUpdateImpl.getOrCreateStagedUserId()
+2023-08-01 20:09:28> CheckForUpdateImpl: Failed to load local releases, starting from scratch: System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\Users\jerem\AppData\Local\Microsoft\Teams\packages\RELEASES'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at Squirrel.Utility.LoadLocalReleases(String localReleaseFile)
+   at Squirrel.UpdateManager.CheckForUpdateImpl.<CheckForUpdate>d__8.MoveNext()
+2023-08-01 20:09:28> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2023-08-01 20:09:28> CheckForUpdateImpl: Downloading RELEASES.exe file from https://statics.teams.cdn.office.net/production-windows-x64/1.6.00.18681
+2023-08-01 20:09:28> FileDownloader: Downloading file: https://statics.teams.cdn.office.net/production-windows-x64/1.6.00.18681/RELEASES.exe
+2023-08-01 20:09:29> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2023-08-01 20:09:29> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2023-08-01 20:09:29> CheckForUpdateImpl: Manifest Raw Length: 130 Length: 127 Content: 9E72563535F3A38E8BF96184335966D466B23F7704A80BE0BA55D5264CF9CF01
+2023-08-01 20:09:29> CheckForUpdateImpl: First run or local directory is corrupt, starting from scratch
+2023-08-01 20:09:29> FileDownloader: Downloading file: https://statics.teams.cdn.office.net/production-windows-x64/1.6.00.18681/Teams-1.6.00.18681-full.nupkg
+2023-08-01 20:10:17> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2023-08-01 20:10:20> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2023-08-01 20:10:20> ApplyReleasesImpl: No delta packages found. Applying current release package.
+2023-08-01 20:10:20> ApplyReleasesImpl: getting squirrel aware apps failed with exception Could not find a part of the path 'C:\Users\jerem\AppData\Local\Microsoft\Teams\current'.
+2023-08-01 20:10:20> ApplyReleasesImpl: Writing files to app directory: C:\Users\jerem\AppData\Local\Microsoft\Teams\current
+2023-08-01 20:10:29> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2023-08-01 20:10:29> ApplyReleasesImpl: Squirrel Enabled Apps: [C:\Users\jerem\AppData\Local\Microsoft\Teams\current\Teams.exe]
+2023-08-01 20:10:37> ApplyReleasesImpl: About to RemoveOldShorcuts for Teams.exe, rootAppDir C:\Users\jerem\AppData\Local\Microsoft\Teams
+2023-08-01 20:10:37> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2023-08-01 20:10:37> ApplyReleasesImpl: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2023-08-01 20:10:37> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2023-08-01 20:10:37> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2023-08-01 20:10:37> ApplyReleasesImpl: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2023-08-01 20:10:37> RegistryService: TrySetRegKey: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run\com.squirrel.Teams.Teams set successfully as "C:\Users\jerem\AppData\Local\Microsoft\Teams\update.exe" --processStart "Teams.exe" --process-start-args "--system-initiated"
+2023-08-01 20:10:37> ApplyReleasesImpl: Starting fixPinnedExecutables
+2023-08-01 20:10:37> ApplyReleasesImpl: Examining Pin: File Explorer.lnk
+2023-08-01 20:10:37> ApplyReleasesImpl: Examining Pin: OneNote.lnk
+2023-08-01 20:10:37> ApplyReleasesImpl: Examining Pin: Outlook.lnk
+2023-08-01 20:10:37> ApplyReleasesImpl: Fixing up tray icons
+2023-08-01 20:10:37> MeetingAddinInstaller: System.ArgumentException: Cannot delete a subkey tree because the subkey does not exist.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at Microsoft.Win32.RegistryKey.DeleteSubKeyTree(String subkey, Boolean throwOnMissingSubKey)
+   at Microsoft.Win32.RegistryKey.DeleteSubKeyTree(String subkey)
+   at Squirrel.MeetingAddinInstaller.<InstallMeetingAddinAsync>d__15.MoveNext()
+2023-08-01 20:10:37> MeetingAddinInstaller: StagedAppDirectory does not exist. Using Current
+2023-08-01 20:10:37> MeetingAddinInstaller: There is no version.txt. Falling back to getting version from folder name
+2023-08-01 20:10:37> MeetingAddinInstaller: Version: 1.0.23125.1; addinPackageDirectory: 1.0.23125.1
+2023-08-01 20:10:37> MeetingAddinInstaller: .dead exists: False
+2023-08-01 20:10:37> MeetingAddinInstaller: path to .dead: C:\Users\jerem\AppData\Local\Microsoft\TeamsMeetingAddin\1.0.23125.1\.dead
+2023-08-01 20:10:37> MeetingAddinInstaller: before cleanup unused versions
+2023-08-01 20:10:37> MeetingAddinInstaller: Addin directory exists. Copy was successful
+2023-08-01 20:10:38> MeetingAddinInstaller: Version 1.0.23125.1 of the meeting add-in is now installed
+2023-08-01 20:10:38> PresenceAddinInstaller: Installing Teams Presence addin for Outlook...
+2023-08-01 20:10:38> PresenceAddinInstaller: Copying C:\Users\jerem\AppData\Local\Microsoft\Teams\current\resources\assets\tlb\Uc.tlb to C:\Users\jerem\AppData\Local\Microsoft\TeamsPresenceAddin
+2023-08-01 20:10:38> PresenceAddinInstaller: Copying C:\Users\jerem\AppData\Local\Microsoft\Teams\current\resources\assets\tlb\Uc.win32.tlb to C:\Users\jerem\AppData\Local\Microsoft\TeamsPresenceAddin
+2023-08-01 20:10:38> PresenceAddinInstaller: check if UC TypeLib points to current\resources\assets\tlb\Uc.tlb
+2023-08-01 20:10:38> PresenceAddinInstaller: Registering UC Typelib WIN32 under HKCU...
+2023-08-01 20:10:39> PresenceAddinInstaller: UC Typelib WIN32 successfully registered to C:\Users\jerem\AppData\Local\Microsoft\TeamsPresenceAddin\Uc.win32.tlb under HKCU!
+2023-08-01 20:10:39> PresenceAddinInstaller: UC Typelib WIN64 is registered under HKLM and file exists. Registration not needed!
+2023-08-01 20:10:39> PresenceAddinInstaller: IM Provider registry key already exists!
+2023-08-01 20:10:39> ApplyReleasesImpl: cleanDeadVersions: for original version of  and current version of 1.6.00.18681
+2023-08-01 20:10:39> ApplyReleasesImpl: cleanDeadVersions: exclude current folder stage
+2023-08-01 20:10:40> RegistryService: TryDeleteRegKey: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams\PreventInstallationFromMsi not found
+2024-02-01 13:26:31> Program: Starting Squirrel Updater: --install . --exeName=TeamsSetupx64_s_8DC235C1F8C89DB-3-0_c_w_.exe --bootstrapperMode
+2024-02-01 13:26:31> RegistryService: TryDeleteRegKey: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams\AcquireSource not found
+2024-02-01 13:26:31> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2024-02-01 13:26:31> Program: bootStrapperModeSettings: pdsEndpoint:https://teams.microsoft.com/desktopclient/installer/windows/
+2024-02-01 13:26:31> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\CurrentBuildNumber exists. Data - 22621
+2024-02-01 13:26:31> FileDownloader: Downloading url: https://teams.microsoft.com/desktopclient/installer/windows/x64
+2024-02-01 13:26:31> Program: Config already exists. Deleting first.
+2024-02-01 13:26:31> Program: Running contextual installation logic
+2024-02-01 13:26:31> Program: Config already exists. Deleting first.
+2024-02-01 13:26:31> Program: ContextualInstaller returned: True. Using filename: TeamsSetupx64_s_8DC235C1F8C89DB-3-0_c_w_.exe
+2024-02-01 13:26:31> UpdateManager: using rootAppDirectory: C:\Users\jerem\AppData\Local\Microsoft\Teams
+2024-02-01 13:26:31> Program: About to install to: C:\Users\jerem\AppData\Local\Microsoft\Teams
+2024-02-01 13:26:31> Program: Install path C:\Users\jerem\AppData\Local\Microsoft\Teams already exists, burning it to the ground
+2024-02-01 13:26:31> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2024-02-01 13:26:32> StashableFolder: TryMove from C:\Users\jerem\AppData\Local\Microsoft\Teams -> C:\Users\jerem\AppData\Local\Microsoft\Teams-s1 failed with I/O error. Retry: 1/1.: System.IO.IOException: Access to the path 'C:\Users\jerem\AppData\Local\Microsoft\Teams' is denied.
+   at System.IO.DirectoryInfo.MoveTo(String destDirName)
+   at Squirrel.StashableFolder.TryMove(DirectoryInfo source, String destination, Statistics stats)
+2024-02-01 13:26:32> Program: Install failed: couldn't stash the install dir: C:\Users\jerem\AppData\Local\Microsoft\Teams, will just start the existing app
+2024-02-01 13:26:32> Program: Couldn't start the app, will do a force-install...
+2024-02-01 13:26:32> Program: Failed to force-remove existing directory for full install, is the app still running ???: System.IO.IOException: The process cannot access the file 'C:\Users\jerem\AppData\Local\Microsoft\Teams\packages\Teams-1.7.00.156-full.nupkg' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalDelete(String path, Boolean checkHost)
+   at System.IO.File.Delete(String path)
+   at Squirrel.Utility.<>c.<DeleteDirectory>b__21_0(String file)
+   at Squirrel.Utility.<>c__DisplayClass14_1`1.<ForEachAsync>b__1()
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Squirrel.Utility.<>c__DisplayClass15_1`1.<<ForEachAsync>b__1>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Squirrel.Utility.<DeleteDirectory>d__21.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Squirrel.Utility.<>c.<<DeleteDirectory>b__21_1>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServi()
+2024-02-01 13:26:31> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2024-02-01 13:26:31> CheckForUpdateImpl: Downloading RELEASES.exe file from https://statics.teams.cdn.office.net/production-windows-x64/1.7.00.156
+2024-02-01 13:26:31> FileDownloader: Downloading file: https://statics.teams.cdn.office.net/production-windows-x64/1.7.00.156/RELEASES.exe
+2024-02-01 13:26:32> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2024-02-01 13:26:32> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2024-02-01 13:26:32> CheckForUpdateImpl: Manifest Raw Length: 128 Length: 125 Content: 1B55EF7861D2290DCA0CEC97E88C44D55FE1DB8E0165324BF3D5EB67CB1691D7
+2024-02-01 13:26:32> CheckForUpdateImpl: First run or local directory is corrupt, starting from scratch
+2024-02-01 13:26:32> FileDownloader: Downloading file: https://statics.teams.cdn.office.net/production-windows-x64/1.7.00.156/Teams-1.7.00.156-full.nupkg
+2024-02-01 13:26:41> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2024-02-01 13:26:43> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2024-02-01 13:26:43> ApplyReleasesImpl: No delta packages found. Applying current release package.
+2024-02-01 13:26:43> ApplyReleasesImpl: getting squirrel aware apps failed with exception Could not find a part of the path 'C:\Users\jerem\AppData\Local\Microsoft\Teams\current'.
+2024-02-01 13:26:43> ApplyReleasesImpl: Writing files to app directory: C:\Users\jerem\AppData\Local\Microsoft\Teams\current
+2024-02-01 13:26:47> RegistryService: RegKeyExists: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Teams\ does not exist
+2024-02-01 13:26:47> ApplyReleasesImpl: Squirrel Enabled Apps: [C:\Users\jerem\AppData\Local\Microsoft\Teams\current\Teams.exe]
+2024-02-01 13:26:51> ApplyReleasesImpl: About to RemoveOldShorcuts for Teams.exe, rootAppDir C:\Users\jerem\AppData\Local\Microsoft\Teams
+2024-02-01 13:26:51> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\CurrentBuildNumber exists. Data - 22621
+2024-02-01 13:26:51> ApplyReleasesImpl: ### PurgeShortcutDescription: shortcutDescription=Microsoft Teams
+2024-02-01 13:26:51> ApplyReleasesImpl: ### PurgeShortcutDescription: shortcutDescription=Microsoft Teams
+2024-02-01 13:26:51> ApplyReleasesImpl: ### TryToRemoveShortcutIfPresent: exist1=False, deleted=False, exist2=False, file="C:\Users\jerem\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Microsoft Corporation\Microsoft Teams.lnk"
+2024-02-01 13:26:51> ApplyReleasesImpl: ### TryToRemoveShortcutIfPresent: exist1=False, deleted=False, exist2=False, file="C:\Users\jerem\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Microsoft Corporation\Microsoft Teams classic (work or school).lnk"
+2024-02-01 13:26:51> ApplyReleasesImpl: ### TryToRemoveShortcutIfPresent: exist1=False, deleted=False, exist2=False, file="C:\Users\jerem\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Microsoft Corporation\Microsoft Teams (work or school).lnk"
+2024-02-01 13:26:51> ApplyReleasesImpl: ### PurgeShortcutDescription: shortcutDescription=Microsoft Teams
+2024-02-01 13:26:51> ApplyReleasesImpl: ### PurgeShortcutDescription: shortcutDescription=Microsoft Teams
+2024-02-01 13:26:51> ApplyReleasesImpl: ### TryToRemoveShortcutIfPresent: exist1=False, deleted=False, exist2=False, file="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Corporation\Microsoft Teams.lnk"
+2024-02-01 13:26:51> ApplyReleasesImpl: ### TryToRemoveShortcutIfPresent: exist1=False, deleted=False, exist2=False, file="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Corporation\Microsoft Teams classic (work or school).lnk"
+2024-02-01 13:26:51> ApplyReleasesImpl: ### TryToRemoveShortcutIfPresent: exist1=False, deleted=False, exist2=False, file="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Corporation\Microsoft Teams (work or school).lnk"
+2024-02-01 13:26:51> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2024-02-01 13:26:51> ApplyReleasesImpl: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2024-02-01 13:26:51> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2024-02-01 13:26:51> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2024-02-01 13:26:51> ApplyReleasesImpl: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2024-02-01 13:26:51> RegistryService: TrySetRegKey: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run\com.squirrel.Teams.Teams set successfully as "C:\Users\jerem\AppData\Local\Microsoft\Teams\update.exe" --processStart "Teams.exe" --process-start-args "--system-initiated"
+2024-02-01 13:26:51> ApplyReleasesImpl: Starting fixPinnedExecutables
+2024-02-01 13:26:51> ApplyReleasesImpl: Examining Pin: File Explorer.lnk
+2024-02-01 13:26:51> ApplyReleasesImpl: Examining Pin: Microsoft Edge.lnk
+2024-02-01 13:26:51> ApplyReleasesImpl: Examining Pin: OneNote.lnk
+2024-02-01 13:26:51> ApplyReleasesImpl: Examining Pin: Outlook.lnk
+2024-02-01 13:26:51> ApplyReleasesImpl: Fixing up tray icons
+2024-02-01 13:26:51> MeetingAddinInstaller: System.ArgumentException: Cannot delete a subkey tree because the subkey does not exist.
+   at System.ThrowHelper.ThrowArgumentException(ExceptionResource resource)
+   at Microsoft.Win32.RegistryKey.DeleteSubKeyTree(String subkey, Boolean throwOnMissingSubKey)
+   at Microsoft.Win32.RegistryKey.DeleteSubKeyTree(String subkey)
+   at Squirrel.MeetingAddinInstaller.<InstallMeetingAddinAsync>d__15.MoveNext()
+2024-02-01 13:26:51> MeetingAddinInstaller: StagedAppDirectory does not exist. Using Current
+2024-02-01 13:26:51> MeetingAddinInstaller: There is no version.txt. Falling back to getting version from folder name
+2024-02-01 13:26:51> MeetingAddinInstaller: Version: 1.0.23334.11; addinPackageDirectory: 1.0.23334.11
+2024-02-01 13:26:51> MeetingAddinInstaller: .dead exists: False
+2024-02-01 13:26:51> MeetingAddinInstaller: path to .dead: C:\Users\jerem\AppData\Local\Microsoft\TeamsMeetingAddin\1.0.23334.11\.dead
+2024-02-01 13:26:51> MeetingAddinInstaller: before cleanup unused versions
+2024-02-01 13:26:52> MeetingAddinInstaller: Addin directory exists. Copy was successful
+2024-02-01 13:26:52> MeetingAddinInstaller: Version 1.0.23334.11 of the meeting add-in is now installed
+2024-02-01 13:26:52> PresenceAddinInstaller: Installing Teams Presence addin for Outlook...
+2024-02-01 13:26:52> PresenceAddinInstaller: check if UC TypeLib points to current\resources\assets\tlb\Uc.tlb
+2024-02-01 13:26:52> PresenceAddinInstaller: UC Typelib WIN32 is registered under HKCU and file exists. Registration not needed!
+2024-02-01 13:26:52> PresenceAddinInstaller: UC Typelib WIN64 is registered under HKLM and file exists. Registration not needed!
+2024-02-01 13:26:52> PresenceAddinInstaller: IM Provider registry key already exists!
+2024-02-01 13:26:52> ApplyReleasesImpl: cleanDeadVersions: for original version of  and current version of 1.7.00.156
+2024-02-01 13:26:52> ApplyReleasesImpl: cleanDeadVersions: exclude current folder stage
+2024-02-01 13:26:53> RegistryService: TryDeleteRegKey: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams\PreventInstallationFromMsi not found
+access the file 'C:\Users\jerem\AppData\Local\Temp\.squirrel-lock-196DF145CA5E524E29756D81E08218FF607E5C5A' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at Squirrel.SingleGlobalInstance..ctor(String key, TimeSpan timeOut)
+2024-02-01 13:26:34> Unhandled exception: System.AggregateException: One or more errors occurred. ---> System.Exception: Couldn't acquire lock, is another instance running
+   at Squirrel.SingleGlobalInstance..ctor(String key, TimeSpan timeOut)
+   at Squirrel.UpdateManager.<>c__DisplayClass40_0.<acquireUpdateLock>b__0()
+   at System.Threading.Tasks.Task`1.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Squirrel.UpdateManager.<CheckForUpdate>d__13.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Squirrel.UpdateManager.<FullInstall>d__16.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd(Task task)
+   at Squirrel.Update.Program.<Install>d__12.MoveNext()
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+   at System.Threading.Tasks.Task.Wait()
+   at Squirrel.Update.Program.executeCommandLine(String[] args)
+   at Squirrel.Update.Program.main(String[] args)
+---> (Inner Exception #0) System.Exception: Couldn't acquire lock, is another instance running
+   at Squirrel.SingleGlobalInstance..ctor(String key, TimeSpan timeOut)
+   at Squirrel.UpdateManager.<>c__DisplayClass40_0.<acquireUpdateLock>b__0()
+   at System.Threading.Tasks.Task`1.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Squirrel.UpdateManager.<CheckForUpdate>d__13.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Squirrel.UpdateManager.<FullInstall>d__16.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd(Task task)
+   at Squirrel.Update.Program.<Install>d__12.MoveNext()<---
+
+2025-03-12 10:51:20> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-03-12 10:51:20> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365BusinessRetail
+2025-03-12 10:51:20> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-03-12 10:51:20> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-03-12 10:51:20> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-03-12 10:51:20> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-03-12 10:51:20> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-03-12 10:51:20> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-03-12 10:51:20> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-03-12 10:51:20> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-03-12 10:51:20> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-03-26 08:27:24> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-03-26 08:27:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365BusinessRetail
+2025-03-26 08:27:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-03-26 08:27:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-03-26 08:27:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-03-26 08:27:24> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-03-26 08:27:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-03-26 08:27:24> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-03-26 08:27:24> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-03-26 08:27:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-03-26 08:27:24> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-04-04 10:39:15> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-04-04 10:39:15> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365BusinessRetail
+2025-04-04 10:39:15> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-04-04 10:39:15> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-04-04 10:39:15> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-04-04 10:39:15> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-04-04 10:39:15> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-04-04 10:39:15> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-04-04 10:39:15> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-04-04 10:39:15> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-04-04 10:39:15> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-04-07 11:20:08> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-04-07 11:20:09> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365BusinessRetail
+2025-04-07 11:20:09> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-04-07 11:20:09> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-04-07 11:20:09> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-04-07 11:20:09> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-04-07 11:20:09> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-04-07 11:20:09> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-04-07 11:20:09> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-04-07 11:20:09> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-04-07 11:20:09> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-04-09 09:48:23> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-04-09 09:48:23> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365BusinessRetail
+2025-04-09 09:48:23> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-04-09 09:48:23> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATEONLYAPPLY
+2025-04-09 09:48:23> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-04-09 09:48:23> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-04-09 09:48:23> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-04-09 09:48:23> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-04-09 09:48:23> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-04-09 09:48:23> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-04-09 09:48:23> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-04-17 10:28:42> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-04-17 10:28:42> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-04-17 10:28:42> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-04-17 10:28:42> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-04-17 10:28:42> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-04-17 10:28:42> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-04-17 10:28:42> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-04-17 10:28:42> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-04-17 10:28:42> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-04-17 10:28:42> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-04-17 10:28:42> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-04-28 10:59:44> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-04-28 10:59:44> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-04-28 10:59:44> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-04-28 10:59:44> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-04-28 10:59:44> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-04-28 10:59:44> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-04-28 10:59:44> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-04-28 10:59:44> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-04-28 10:59:44> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-04-28 10:59:44> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-04-28 10:59:44> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-04-29 10:23:41> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-04-29 10:23:41> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-04-29 10:23:41> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-04-29 10:23:41> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-04-29 10:23:41> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-04-29 10:23:41> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-04-29 10:23:41> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-04-29 10:23:41> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-04-29 10:23:41> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-04-29 10:23:41> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-04-29 10:23:41> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-05-08 11:23:14> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-05-08 11:23:14> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-05-08 11:23:14> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-05-08 11:23:14> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATEONLYAPPLY
+2025-05-08 11:23:14> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-05-08 11:23:14> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-05-08 11:23:14> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-05-08 11:23:14> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-05-08 11:23:14> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-05-08 11:23:14> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-05-08 11:23:14> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-05-13 23:55:05> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-05-13 23:55:05> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-05-13 23:55:05> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-05-13 23:55:05> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-05-13 23:55:05> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-05-13 23:55:05> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-05-13 23:55:05> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-05-13 23:55:05> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-05-13 23:55:05> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-05-13 23:55:05> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-05-13 23:55:05> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-05-14 09:39:31> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-05-14 09:39:31> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-05-14 09:39:31> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-05-14 09:39:31> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-05-14 09:39:31> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-05-14 09:39:31> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-05-14 09:39:31> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-05-14 09:39:31> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-05-14 09:39:31> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-05-14 09:39:31> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-05-14 09:39:31> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-05-20 09:55:44> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-05-20 09:55:44> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-05-20 09:55:44> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-05-20 09:55:44> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-05-20 09:55:44> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-05-20 09:55:44> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-05-20 09:55:44> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-05-20 09:55:44> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-05-20 09:55:44> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-05-20 09:55:44> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-05-20 09:55:44> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-05-29 10:21:36> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-05-29 10:21:36> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-05-29 10:21:36> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-05-29 10:21:36> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-05-29 10:21:36> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-05-29 10:21:36> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-05-29 10:21:36> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-05-29 10:21:36> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-05-29 10:21:36> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-05-29 10:21:36> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-05-29 10:21:36> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-06-04 13:07:57> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-06-04 13:07:57> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-06-04 13:07:57> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-06-04 13:07:57> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - RICHINTERACTION
+2025-06-04 13:07:57> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-06-04 13:07:57> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-06-04 13:07:57> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-06-04 13:07:57> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-06-04 13:07:57> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-06-04 13:07:57> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-06-04 13:07:57> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-06-11 11:48:40> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-06-11 11:48:40> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-06-11 11:48:40> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-06-11 11:48:40> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-06-11 11:48:40> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-06-11 11:48:40> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-06-11 11:48:40> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-06-11 11:48:40> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-06-11 11:48:40> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-06-11 11:48:40> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-06-11 11:48:40> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-06-12 11:41:34> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-06-12 11:41:34> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-06-12 11:41:34> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-06-12 11:41:34> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-06-12 11:41:34> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-06-12 11:41:34> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-06-12 11:41:34> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-06-12 11:41:34> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-06-12 11:41:34> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-06-12 11:41:34> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-06-12 11:41:34> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-06-13 17:02:50> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-06-13 17:02:50> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-06-13 17:02:50> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-06-13 17:02:50> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-06-13 17:02:50> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-06-13 17:02:50> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-06-13 17:02:50> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-06-13 17:02:50> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-06-13 17:02:50> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-06-13 17:02:50> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-06-13 17:02:50> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-06-19 00:41:37> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-06-19 00:41:37> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-06-19 00:41:37> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-06-19 00:41:37> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - RICHINTERACTION
+2025-06-19 00:41:37> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-06-19 00:41:37> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-06-19 00:41:37> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-06-19 00:41:37> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-06-19 00:41:37> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-06-19 00:41:37> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-06-19 00:41:37> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-07-01 09:36:43> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-07-01 09:36:43> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-07-01 09:36:43> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-07-01 09:36:43> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-07-01 09:36:43> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-07-01 09:36:43> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-07-01 09:36:43> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-07-01 09:36:43> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-07-01 09:36:43> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-07-01 09:36:43> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-07-01 09:36:43> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-07-10 09:49:35> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-07-10 09:49:35> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-07-10 09:49:35> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-07-10 09:49:35> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-07-10 09:49:35> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-07-10 09:49:35> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-07-10 09:49:35> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-07-10 09:49:35> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-07-10 09:49:35> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-07-10 09:49:35> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-07-10 09:49:35> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-07-23 09:37:42> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-07-23 09:37:42> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-07-23 09:37:42> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-07-23 09:37:42> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-07-23 09:37:42> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-07-23 09:37:42> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-07-23 09:37:42> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-07-23 09:37:42> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-07-23 09:37:42> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-07-23 09:37:42> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-07-23 09:37:42> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-08-13 10:02:07> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-08-13 10:02:07> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-08-13 10:02:07> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-08-13 10:02:07> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-08-13 10:02:07> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-08-13 10:02:07> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-08-13 10:02:07> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-08-13 10:02:07> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-08-13 10:02:07> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-08-13 10:02:07> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-08-13 10:02:07> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-08-22 09:04:24> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-08-22 09:04:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-08-22 09:04:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-08-22 09:04:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-08-22 09:04:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-08-22 09:04:24> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-08-22 09:04:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-08-22 09:04:24> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-08-22 09:04:24> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-08-22 09:04:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-08-22 09:04:24> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-09-10 11:47:03> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-09-10 11:47:04> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-09-10 11:47:04> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-09-10 11:47:04> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-09-10 11:47:04> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-09-10 11:47:04> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-09-10 11:47:04> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-09-10 11:47:04> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-09-10 11:47:04> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-09-10 11:47:04> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-09-10 11:47:04> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-09-11 01:01:06> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-09-11 01:01:06> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-09-11 01:01:06> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-09-11 01:01:06> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-09-11 01:01:06> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-09-11 01:01:06> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-09-11 01:01:06> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-09-11 01:01:06> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-09-11 01:01:06> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-09-11 01:01:06> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-09-11 01:01:06> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-09-17 03:06:00> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-09-17 03:06:00> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-09-17 03:06:00> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-09-17 03:06:00> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-09-17 03:06:00> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-09-17 03:06:00> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-09-17 03:06:00> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-09-17 03:06:00> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-09-17 03:06:00> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-09-17 03:06:00> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-09-17 03:06:00> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-09-30 10:39:18> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-09-30 10:39:18> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-09-30 10:39:18> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-09-30 10:39:18> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-09-30 10:39:18> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-09-30 10:39:18> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-09-30 10:39:18> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-09-30 10:39:18> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-09-30 10:39:18> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-09-30 10:39:18> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-09-30 10:39:18> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-10-03 10:32:45> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-10-03 10:32:45> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-10-03 10:32:45> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-10-03 10:32:45> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-10-03 10:32:45> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-10-03 10:32:45> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-10-03 10:32:45> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-10-03 10:32:45> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-10-03 10:32:45> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-10-03 10:32:45> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-10-03 10:32:45> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-10-08 12:53:26> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-10-08 12:53:26> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-10-08 12:53:26> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-10-08 12:53:26> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-10-08 12:53:26> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-10-08 12:53:26> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-10-08 12:53:26> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-10-08 12:53:26> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-10-08 12:53:26> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-10-08 12:53:26> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-10-08 12:53:26> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-10-09 10:32:32> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-10-09 10:32:33> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-10-09 10:32:33> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-10-09 10:32:33> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-10-09 10:32:33> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-10-09 10:32:33> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-10-09 10:32:33> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-10-09 10:32:33> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-10-09 10:32:33> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-10-09 10:32:33> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-10-09 10:32:33> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-10-14 12:32:57> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-10-14 12:32:57> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-10-14 12:32:57> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-10-14 12:32:57> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-10-14 12:32:57> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-10-14 12:32:57> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-10-14 12:32:57> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-10-14 12:32:57> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-10-14 12:32:57> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-10-14 12:32:57> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-10-14 12:32:57> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-10-22 15:51:11> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-10-22 15:51:11> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-10-22 15:51:11> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-10-22 15:51:11> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-10-22 15:51:11> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-10-22 15:51:11> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-10-22 15:51:11> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-10-22 15:51:11> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-10-22 15:51:11> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-10-22 15:51:11> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-10-22 15:51:11> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-10-30 09:34:07> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-10-30 09:34:07> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-10-30 09:34:07> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-10-30 09:34:07> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-10-30 09:34:07> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-10-30 09:34:07> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-10-30 09:34:07> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-10-30 09:34:07> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-10-30 09:34:07> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-10-30 09:34:07> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-10-30 09:34:07> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-10-30 10:54:16> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-10-30 10:54:16> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-10-30 10:54:16> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-10-30 10:54:16> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-10-30 10:54:16> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-10-30 10:54:16> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-10-30 10:54:16> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-10-30 10:54:16> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-10-30 10:54:16> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-10-30 10:54:16> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-10-30 10:54:16> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-11-05 11:42:29> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-11-05 11:42:30> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-11-05 11:42:30> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-11-05 11:42:30> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-11-05 11:42:30> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-11-05 11:42:30> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-11-05 11:42:30> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-11-05 11:42:30> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-11-05 11:42:30> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-11-05 11:42:30> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-11-05 11:42:30> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-11-24 10:21:50> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-11-24 10:21:50> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-11-24 10:21:50> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-11-24 10:21:50> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-11-24 10:21:50> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-11-24 10:21:50> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-11-24 10:21:50> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-11-24 10:21:50> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-11-24 10:21:50> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-11-24 10:21:50> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-11-24 10:21:50> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-12-03 11:11:43> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-12-03 11:11:43> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-12-03 11:11:43> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-12-03 11:11:43> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-12-03 11:11:43> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-12-03 11:11:43> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-12-03 11:11:43> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-12-03 11:11:43> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-12-03 11:11:43> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-12-03 11:11:43> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-12-03 11:11:43> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-12-10 10:04:25> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-12-10 10:04:25> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-12-10 10:04:25> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-12-10 10:04:25> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-12-10 10:04:25> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-12-10 10:04:25> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-12-10 10:04:25> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-12-10 10:04:25> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-12-10 10:04:25> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-12-10 10:04:25> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-12-10 10:04:25> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2025-12-16 12:12:03> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2025-12-16 12:12:03> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2025-12-16 12:12:03> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2025-12-16 12:12:03> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2025-12-16 12:12:03> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2025-12-16 12:12:03> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2025-12-16 12:12:03> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2025-12-16 12:12:03> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2025-12-16 12:12:03> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2025-12-16 12:12:03> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2025-12-16 12:12:03> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-01-14 11:26:24> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-01-14 11:26:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-01-14 11:26:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-01-14 11:26:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-01-14 11:26:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-01-14 11:26:24> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-01-14 11:26:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-01-14 11:26:24> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-01-14 11:26:24> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-01-14 11:26:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-01-14 11:26:24> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-02-03 12:13:05> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-02-03 12:13:05> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-02-03 12:13:05> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-02-03 12:13:05> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-02-03 12:13:05> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-02-03 12:13:05> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-02-03 12:13:05> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-02-03 12:13:05> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-02-03 12:13:05> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-02-03 12:13:05> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-02-03 12:13:05> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-02-04 12:04:55> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-02-04 12:04:56> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-02-04 12:04:56> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-02-04 12:04:56> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-02-04 12:04:56> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-02-04 12:04:56> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-02-04 12:04:56> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-02-04 12:04:56> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-02-04 12:04:56> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-02-04 12:04:56> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-02-04 12:04:56> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-02-11 12:57:11> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-02-11 12:57:11> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-02-11 12:57:11> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-02-11 12:57:11> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-02-11 12:57:11> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-02-11 12:57:11> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-02-11 12:57:11> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-02-11 12:57:11> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-02-11 12:57:11> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-02-11 12:57:11> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-02-11 12:57:11> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-02-12 07:48:07> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-02-12 07:48:07> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-02-12 07:48:07> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-02-12 07:48:07> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - RICHINTERACTION
+2026-02-12 07:48:07> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-02-12 07:48:07> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-02-12 07:48:07> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-02-12 07:48:07> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-02-12 07:48:07> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-02-12 07:48:07> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-02-12 07:48:07> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-02-13 10:49:39> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-02-13 10:49:39> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-02-13 10:49:39> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-02-13 10:49:39> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - RICHINTERACTION
+2026-02-13 10:49:39> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-02-13 10:49:39> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-02-13 10:49:39> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-02-13 10:49:39> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-02-13 10:49:39> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-02-13 10:49:39> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-02-13 10:49:39> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-02-17 10:45:11> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-02-17 10:45:11> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-02-17 10:45:11> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-02-17 10:45:11> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-02-17 10:45:11> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-02-17 10:45:11> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-02-17 10:45:11> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-02-17 10:45:11> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-02-17 10:45:11> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-02-17 10:45:11> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-02-17 10:45:11> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-02-17 10:58:57> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-02-17 10:58:57> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-02-17 10:58:57> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-02-17 10:58:57> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-02-17 10:58:57> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-02-17 10:58:57> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-02-17 10:58:57> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-02-17 10:58:57> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-02-17 10:58:57> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-02-17 10:58:57> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-02-17 10:58:57> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-02-20 11:02:24> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-02-20 11:02:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-02-20 11:02:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-02-20 11:02:24> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-02-20 11:02:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-02-20 11:02:24> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-02-20 11:02:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-02-20 11:02:24> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-02-20 11:02:24> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-02-20 11:02:24> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-02-20 11:02:24> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-02-20 11:20:16> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-02-20 11:20:16> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-02-20 11:20:16> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-02-20 11:20:16> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-02-20 11:20:16> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-02-20 11:20:16> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-02-20 11:20:16> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-02-20 11:20:16> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-02-20 11:20:16> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-02-20 11:20:16> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-02-20 11:20:16> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-02-25 10:46:39> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-02-25 10:46:39> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-02-25 10:46:39> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-02-25 10:46:39> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-02-25 10:46:39> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-02-25 10:46:39> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-02-25 10:46:39> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-02-25 10:46:39> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-02-25 10:46:39> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-02-25 10:46:39> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-02-25 10:46:39> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-03-03 11:35:09> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-03-03 11:35:09> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-03-03 11:35:09> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-03-03 11:35:09> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-03-03 11:35:09> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-03-03 11:35:09> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-03-03 11:35:09> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-03-03 11:35:09> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-03-03 11:35:09> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-03-03 11:35:09> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-03-03 11:35:09> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-03-10 11:01:30> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-03-10 11:01:30> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-03-10 11:01:30> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-03-10 11:01:30> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-03-10 11:01:30> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-03-10 11:01:30> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-03-10 11:01:30> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-03-10 11:01:30> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-03-10 11:01:30> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-03-10 11:01:30> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-03-10 11:01:30> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-03-13 11:42:25> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-03-13 11:42:25> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-03-13 11:42:25> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-03-13 11:42:25> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-03-13 11:42:25> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-03-13 11:42:25> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-03-13 11:42:25> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-03-13 11:42:25> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-03-13 11:42:25> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-03-13 11:42:25> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-03-13 11:42:25> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-03-24 10:11:37> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-03-24 10:11:37> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-03-24 10:11:37> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-03-24 10:11:37> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-03-24 10:11:37> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-03-24 10:11:37> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-03-24 10:11:37> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-03-24 10:11:37> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-03-24 10:11:37> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-03-24 10:11:37> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-03-24 10:11:37> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
+2026-04-07 18:20:48> Program: Starting Squirrel Updater: --install . --checkInstall --source=PROPLUS --silent --exeName=Teams.exe
+2026-04-07 18:20:48> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\ProductReleaseIds exists. Data - OneNoteFreeRetail,O365HomePremRetail
+2026-04-07 18:20:48> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration\AudienceData exists. Data - Production::CC
+2026-04-07 18:20:48> RegistryService: TryGetRegKey: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\LastScenario exists. Data - UPDATE
+2026-04-07 18:20:48> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Cloud\Office\16.0\Teams does not exist
+2026-04-07 18:20:48> Program: Registry value Software\Policies\Microsoft\Cloud\Office\16.0\Teams\PreventFirstLaunchAfterInstall does not exist
+2026-04-07 18:20:48> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams has PreventFirstLaunchAfterInstall. Data - 1
+2026-04-07 18:20:48> RegistryService: TryGetRegKey: HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall exists. Data - 1
+2026-04-07 18:20:48> Program: Registry value Software\Policies\Microsoft\Office\16.0\Teams\PreventFirstLaunchAfterInstall is set to 1
+2026-04-07 18:20:48> RegistryService: RegKeyExists: HKEY_CURRENT_USER\Software\Microsoft\Office\Teams has PreventInstallationFromMsi. Data - 1
+2026-04-07 18:20:48> Program: Ignored request to install from Teams Installer (MSI) because PreventInstallationFromMsi was found and is set in registry
