@@ -268,34 +268,45 @@ function fbListen(){
   },(e)=>setSyncState('err','Lost connection'));
 }
 
-// ── Score Fetch — tries Masters.com then ESPN via proxies ────────
+// ── Score Fetch ──────────────────────────────────────────────────
 async function fetchESPN(){
   document.querySelectorAll('.refresh-btn').forEach(b=>{b.disabled=true;b.textContent='↻ Fetching…';});
   let parsed=false;
 
-  // 1. Try Masters.com official API (best data)
-  for(const proxy of [''].concat(CORS_PROXIES)){
+  // Try each proxy with ESPN API — log every attempt
+  const attempts=[
+    'https://api.allorigins.win/raw?url='+encodeURIComponent(ESPN_API),
+    'https://corsproxy.io/?'+encodeURIComponent(ESPN_API),
+    'https://thingproxy.freeboard.io/fetch/'+ESPN_API,
+    ESPN_API, // direct last
+  ];
+
+  for(const url of attempts){
     if(parsed)break;
     try{
-      const url=proxy?proxy+encodeURIComponent(MASTERS_API):MASTERS_API;
-      const r=await fetch(url);
-      if(r.ok){const j=await r.json();if(j&&j.data&&j.data.player){parseMasters(j);parsed=true;console.log('Masters.com OK');}}
-    }catch(e){}
+      console.log('Trying:',url.substring(0,60));
+      const r=await fetch(url,{headers:{'Accept':'application/json'}});
+      console.log('Response status:',r.status,'ok:',r.ok);
+      if(r.ok){
+        const j=await r.json();
+        console.log('JSON top keys:',Object.keys(j));
+        if(j&&j.events&&j.events.length>0){
+          window._lastESPNRaw=j;
+          parseESPN(j);
+          parsed=true;
+          console.log('SUCCESS with:',url.substring(0,60));
+        } else {
+          console.log('No events in response');
+        }
+      }
+    }catch(e){console.log('Failed:',e.message);}
   }
 
-  // 2. Fallback: ESPN API via proxies
   if(!parsed){
-    for(const proxy of [''].concat(CORS_PROXIES)){
-      if(parsed)break;
-      try{
-        const url=proxy?proxy+encodeURIComponent(ESPN_API):ESPN_API;
-        const r=await fetch(url,{headers:{'Accept':'application/json'}});
-        if(r.ok){const j=await r.json();if(j&&j.events){window._lastESPNRaw=j;parseESPN(j);parsed=true;console.log('ESPN OK via',proxy||'direct');}}
-      }catch(e){}
-    }
+    console.warn('ALL fetch attempts failed');
+    // Show error in status
+    document.querySelectorAll('.stxt').forEach(el=>el.textContent='Score fetch failed — check console');
   }
-
-  if(!parsed)console.warn('All score fetch attempts failed');
   lastFetch=new Date();
   for(let r=1;r<=4;r++)renderRound(r);
   renderLiveBoard();
