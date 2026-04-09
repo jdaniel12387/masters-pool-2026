@@ -210,12 +210,9 @@ const TEAMS = ['HC','JAD','CC','RD','DC','JDS','SC','KS'];
 const SNAKE = ['HC','CC','DC','KS','SC','JAD','JDS','RD','RD','JDS','JAD','SC','KS','DC','CC','HC'];
 const RD_LABELS = {1:'Round 1 · Thu Apr 9',2:'Round 2 · Fri Apr 10',3:'Round 3 · Sat Apr 11',4:'Round 4 · Sun Apr 12'};
 
-// ESPN endpoints — try multiple formats
-const ESPN_URLS = [
-  'https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard',
-  'https://site.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard?tournamentId=401811941',
-  'https://site.web.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard?tournamentId=401811941',
-];
+// Masters.com official leaderboard API + ESPN fallback
+const MASTERS_API = 'https://www.masters.com/en_US/scores/feeds/2026/scores.json';
+const ESPN_API = 'https://site.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard?tournamentId=401811941';
 const CORS_PROXIES = [
   'https://corsproxy.io/?',
   'https://api.allorigins.win/raw?url=',
@@ -271,22 +268,34 @@ function fbListen(){
   },(e)=>setSyncState('err','Lost connection'));
 }
 
-// ── ESPN Score Fetch ─────────────────────────────────────────────
+// ── Score Fetch — tries Masters.com then ESPN via proxies ────────
 async function fetchESPN(){
   document.querySelectorAll('.refresh-btn').forEach(b=>{b.disabled=true;b.textContent='↻ Fetching…';});
-  let data=null;
-  for(const url of ESPN_URLS){
-    if(data)break;
-    try{const r=await fetch(url,{headers:{'Accept':'application/json'}});if(r.ok){const j=await r.json();if(j&&(j.events||j.competitors)){data=j;break;}}}catch(e){}
+  let parsed=false;
+
+  // 1. Try Masters.com official API (best data)
+  for(const proxy of [''].concat(CORS_PROXIES)){
+    if(parsed)break;
+    try{
+      const url=proxy?proxy+encodeURIComponent(MASTERS_API):MASTERS_API;
+      const r=await fetch(url);
+      if(r.ok){const j=await r.json();if(j&&j.data&&j.data.player){parseMasters(j);parsed=true;console.log('Masters.com OK');}}
+    }catch(e){}
   }
-  if(!data){
-    outer:for(const proxy of CORS_PROXIES){
-      for(const url of ESPN_URLS){
-        try{const r=await fetch(proxy+encodeURIComponent(url));if(r.ok){const j=await r.json();if(j&&(j.events||j.competitors)){data=j;break outer;}}}catch(e){}
-      }
+
+  // 2. Fallback: ESPN API via proxies
+  if(!parsed){
+    for(const proxy of [''].concat(CORS_PROXIES)){
+      if(parsed)break;
+      try{
+        const url=proxy?proxy+encodeURIComponent(ESPN_API):ESPN_API;
+        const r=await fetch(url,{headers:{'Accept':'application/json'}});
+        if(r.ok){const j=await r.json();if(j&&j.events){parseESPN(j);parsed=true;console.log('ESPN OK via',proxy||'direct');}}
+      }catch(e){}
     }
   }
-  if(data){parseESPN(data);}else{console.warn('All ESPN attempts failed');}
+
+  if(!parsed)console.warn('All score fetch attempts failed');
   lastFetch=new Date();
   for(let r=1;r<=4;r++)renderRound(r);
   renderLiveBoard();
@@ -294,61 +303,88 @@ async function fetchESPN(){
   document.querySelectorAll('.refresh-btn').forEach(b=>{b.disabled=false;b.textContent='↻ Refresh Scores';});
 }
 
+// Parse Masters.com official JSON
+function parseMasters(data){
+  espnData={};
+  try{
+    const players=data.data.player||[];
+    const currentRd=parseInt(data.data.roundNumber)||1;
+    players.forEach(p=>{
+      const name=(p.full_name||p.display_name||'').trim();
+      if(!name)return;
+      // Round scores to par
+      const rdScores={};
+      for(let r=1;r<=4;r++){
+        const rd=p[`round${r}`]||p.rounds?.[r-1];
+        if(rd!==undefined&&rd!==null&&rd!==''){
+          const n=parseInt(rd);if(!isNaN(n))rdScores[r]=n;
+        }
+      }
+      // Thru
+      const thru=p.thru||p.hole||'';
+      // Tee time — Masters.com stores as "8:04 AM" style
+      const teeTime=p.tee_time||p.teeTime||'';
+      // Status
+      const status=p.status||'';
+      // Current round score to par
+      const curScore=rdScores[currentRd]??null;
+      espnData[name.toLowerCase()]={
+        name,
+        overallScore:curScore,
+        rdScores,
+        thru:thru==='18'&&status==='F'?'F':thru,
+        teeTime,
+        status,
+        position:parseInt(p.pos||p.position||'999')||999
+      };
+    });
+    console.log('Masters.com parsed',Object.keys(espnData).length,'players');
+  }catch(e){console.error('Masters parse error',e);}
+}
+
+// Parse ESPN JSON — correctly extract per-round scores
 function parseESPN(data){
   espnData={};
   try{
     const comps=data?.events?.[0]?.competitions?.[0]?.competitors||[];
+    const currentRd=(data?.events?.[0]?.competitions?.[0]?.status?.period)||1;
     comps.forEach(c=>{
       const name=c.athlete?.displayName||'';
       if(!name)return;
-
-      // Round-by-round scores (each linescores entry = one round)
+      // linescores has one entry per round with value = score to par for that round
       const rdScores={};
       (c.linescores||[]).forEach((rd,i)=>{
-        // value is the raw score for that round, displayValue has +/- format
-        const raw=rd.value;
-        if(raw!==undefined&&raw!==null&&raw!==''){
-          const n=Number(raw);
-          if(!isNaN(n))rdScores[i+1]=n;
-        }
+        const dv=rd.displayValue||'';
+        let n=null;
+        if(dv==='E'||dv==='Even')n=0;
+        else{const parsed=parseInt(dv);if(!isNaN(parsed))n=parsed;}
+        if(n!==null)rdScores[i+1]=n;
       });
-
-      // Thru / hole info
-      const thruStat=c.statistics?.find(s=>s.name==='thru'||s.abbreviation==='THRU');
-      const thru=thruStat?.displayValue||c.status?.thru||'';
-
-      // Tee time
-      const teeTime=c.teeTime||c.status?.teeTime||data?.events?.[0]?.date||'';
-
-      // Status
-      const statusName=c.status?.type?.name||c.status?.type?.description||'';
-      const statusAbbr=c.status?.type?.shortDetail||'';
-
-      // Overall score to par
-      let overallScore=null;
-      const scoreVal=c.score;
-      if(scoreVal==='E'||scoreVal==='Even')overallScore=0;
-      else if(scoreVal!==undefined&&scoreVal!==null&&scoreVal!==''){
-        const n=parseInt(scoreVal);
-        if(!isNaN(n))overallScore=n;
+      // Thru from statistics
+      const thruStat=c.statistics?.find(s=>s.name==='thru');
+      const thru=thruStat?.displayValue||'';
+      // Tee time from status
+      const teeRaw=c.status?.teeTime||'';
+      let teeTime='';
+      if(teeRaw){
+        try{
+          const d=new Date(teeRaw);
+          if(!isNaN(d))teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
+        }catch(e){}
       }
-
+      const status=c.status?.type?.name||'';
+      const curScore=rdScores[currentRd]??null;
       espnData[name.toLowerCase()]={
         name,
-        overallScore,
+        overallScore:curScore,
         rdScores,
-        status:statusName,
-        statusAbbr,
-        thru,
+        thru:thru==='18'&&status.includes('Final')?'F':thru,
         teeTime,
-        position:c.sortOrder||c.linescores?.length?999-Object.keys(rdScores).length:999
+        status,
+        position:c.sortOrder||999
       };
     });
-    console.log('ESPN parsed',Object.keys(espnData).length,'players');
-    if(Object.keys(espnData).length>0){
-      const sample=Object.values(espnData)[0];
-      console.log('Sample player:',sample);
-    }
+    console.log('ESPN parsed',Object.keys(espnData).length,'players, round',currentRd);
   }catch(e){console.error('ESPN parse error',e);}
 }
 
