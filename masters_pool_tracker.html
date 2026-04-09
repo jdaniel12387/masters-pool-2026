@@ -215,11 +215,11 @@ const RD_LABELS = {1:'Round 1 · Thu Apr 9',2:'Round 2 · Fri Apr 10',3:'Round 3
 
 // Masters.com official leaderboard API + ESPN fallback
 const MASTERS_API = 'https://www.masters.com/en_US/scores/feeds/2026/scores.json';
-// ESPN correct scoreboard — fetches currently active PGA tournament
+// ESPN scoreboard — direct URL works! (status 200 confirmed)
 const ESPN_URLS = [
   'https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard',
-  'https://site.web.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard?tournamentId=401811941',
-  'https://site.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard',
+  'https://api.allorigins.win/raw?url='+encodeURIComponent('https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard'),
+  'https://api.allorigins.win/raw?url='+encodeURIComponent('https://site.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard'),
 ];
 
 const MASTERS_FIELD = [
@@ -275,59 +275,38 @@ function fbListen(){
 async function fetchESPN(){
   document.querySelectorAll('.refresh-btn').forEach(b=>{b.disabled=true;b.textContent='↻ Fetching…';});
   let parsed=false;
-  let debugLog=[];
 
-  // allorigins is the only proxy that connects — build all attempts with it
-  const attempts=[];
-  for(const espnUrl of ESPN_URLS){
-    attempts.push('https://api.allorigins.win/raw?url='+encodeURIComponent(espnUrl));
-  }
-  // Also try Masters.com via allorigins
-  attempts.push('https://api.allorigins.win/raw?url='+encodeURIComponent(MASTERS_API));
-  // Try direct as last resort
-  for(const espnUrl of ESPN_URLS) attempts.push(espnUrl);
+  // Try all URL+proxy combos — direct ESPN scoreboard worked in testing
+  const attempts=[
+    'https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard', // direct — worked!
+    'https://api.allorigins.win/raw?url='+encodeURIComponent('https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard'),
+    'https://api.codetabs.com/v1/proxy?quest=https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard',
+    'https://api.allorigins.win/raw?url='+encodeURIComponent('https://site.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard'),
+    'https://site.api.espn.com/apis/site/v2/sports/golf/pga/leaderboard',
+  ];
 
   for(const url of attempts){
     if(parsed)break;
-    const shortUrl=url.substring(0,70)+'...';
     try{
       const r=await fetch(url);
-      debugLog.push(`✓ ${r.status}: ${shortUrl}`);
       if(r.ok){
         const text=await r.text();
         let j;
-        try{j=JSON.parse(text);}catch(e){debugLog.push(`  Parse error: ${e.message}`);continue;}
-        const topKeys=Object.keys(j).join(', ');
-        debugLog.push(`  Keys: ${topKeys}`);
-
-        // Masters.com format
-        if(j.data&&j.data.player){
-          parseMasters(j);parsed=true;
-          debugLog.push(`  ✅ Masters.com parsed OK! ${Object.keys(espnData).length} players`);
-          break;
-        }
-        // ESPN scoreboard format
+        try{j=JSON.parse(text);}catch(e){continue;}
         if(j.events&&j.events.length>0){
           window._lastESPNRaw=j;
-          const comp=j.events[0]?.competitions?.[0]?.competitors?.[0];
-          debugLog.push(`  First player: ${comp?.athlete?.displayName}, score: ${comp?.score}, linescores: ${JSON.stringify(comp?.linescores?.slice(0,1))}, stats: ${JSON.stringify(comp?.statistics?.slice(0,2))}`);
-          parseESPN(j);parsed=true;
-          debugLog.push(`  ✅ ESPN parsed OK! ${Object.keys(espnData).length} players`);
-          break;
-        }
-        // ESPN leaderboard format (different structure)
-        if(j.leaderboard||j.competitors||j.golfers){
-          debugLog.push(`  Different ESPN format — keys: ${topKeys}`);
+          parseESPN(j);
+          parsed=true;
+          console.log('ESPN OK:',url.substring(0,60));
+        } else if(j.data&&j.data.player){
+          parseMasters(j);
+          parsed=true;
         }
       }
-    }catch(e){
-      debugLog.push(`✗ ${shortUrl}: ${e.message}`);
-    }
+    }catch(e){}
   }
 
-  const debugEl=document.getElementById('debug-output');
-  if(debugEl){debugEl.style.display='block';debugEl.textContent=debugLog.join('\n');}
-  if(!parsed) document.querySelectorAll('.stxt').forEach(el=>el.textContent='Score fetch failed — see debug below');
+  if(!parsed) console.warn('All fetch attempts failed');
   lastFetch=new Date();
   for(let r=1;r<=4;r++)renderRound(r);
   renderLiveBoard();
@@ -383,48 +362,51 @@ function parseESPN(data){
     comps.forEach(c=>{
       const name=c.athlete?.displayName||'';
       if(!name)return;
-      // linescores: each entry is a round, value = raw strokes, displayValue = score to par string
+
+      // c.score = current round score to par as string ("-4", "E", "+2", "0")
+      let overallScore=null;
+      const scoreVal=String(c.score||'').trim();
+      if(scoreVal==='E'||scoreVal==='Even'||scoreVal==='0')overallScore=0;
+      else if(scoreVal!==''){const n=parseInt(scoreVal);if(!isNaN(n))overallScore=n;}
+
       const rdScores={};
-      (c.linescores||[]).forEach((rd,i)=>{
-        // Try displayValue first (+/-/E format), then value field
-        let n=null;
-        const dv=(rd.displayValue||'').trim();
-        if(dv==='E'||dv==='Even'||dv==='0')n=0;
-        else if(dv){const p=parseInt(dv);if(!isNaN(p))n=p;}
-        // Fallback: value field is raw strokes, need par=72 to convert
-        if(n===null&&rd.value!==undefined&&rd.value!==null&&rd.value!==''){
-          const raw=Number(rd.value);
-          if(!isNaN(raw)&&raw>0)n=raw-72; // convert strokes to score to par
+      if(overallScore!==null) rdScores[currentRd]=overallScore;
+
+      // Thru — linescores length = holes played this round
+      let thru='';
+      if(c.linescores?.length>0){
+        const last=c.linescores[c.linescores.length-1];
+        // If status is final, show F
+        const statusDesc=c.status?.type?.description||'';
+        if(statusDesc.toLowerCase().includes('final')){
+          thru='F';
+        } else {
+          thru=String(c.linescores.length);
         }
-        if(n!==null)rdScores[i+1]=n;
-      });
-      // Thru from statistics
-      const thruStat=c.statistics?.find(s=>s.name==='thru');
-      const thru=thruStat?.displayValue||'';
-      // Tee time from status
-      const teeRaw=c.status?.teeTime||'';
+      }
+
+      // Tee time — from statistics array, displayValue like "Thu Apr 09 08:50:00 PDT 2026"
       let teeTime='';
-      if(teeRaw){
+      const teeStat=c.statistics?.find(s=>
+        s.name==='teeTime'||s.displayName==='Tee Time'||
+        (s.displayValue&&s.displayValue.includes('Apr'))
+      );
+      if(teeStat?.displayValue){
         try{
-          const d=new Date(teeRaw);
-          if(!isNaN(d))teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
+          const d=new Date(teeStat.displayValue);
+          if(!isNaN(d)){
+            teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
+          }
         }catch(e){}
       }
-      const status=c.status?.type?.name||'';
-      // Use the score field directly for current overall score to par
-      let overallScore=null;
-      const scoreVal=(c.score||'').trim();
-      if(scoreVal==='E'||scoreVal==='Even'||scoreVal==='0')overallScore=0;
-      else if(scoreVal){const n=parseInt(scoreVal);if(!isNaN(n))overallScore=n;}
-      // Current round score = the last linescore entry that has a value
-      const rdKeys=Object.keys(rdScores).map(Number).sort((a,b)=>a-b);
-      const latestRd=rdKeys[rdKeys.length-1]||currentRd;
-      const curScore=rdScores[latestRd]??null;
+
+      const status=c.status?.type?.description||c.status?.type?.name||'';
+
       espnData[name.toLowerCase()]={
         name,
         overallScore,
         rdScores,
-        thru:thru==='18'&&status.includes('Final')?'F':thru,
+        thru,
         teeTime,
         status,
         position:c.sortOrder||999
