@@ -290,7 +290,7 @@ async function fetchESPN(){
       try{
         const url=proxy?proxy+encodeURIComponent(ESPN_API):ESPN_API;
         const r=await fetch(url,{headers:{'Accept':'application/json'}});
-        if(r.ok){const j=await r.json();if(j&&j.events){parseESPN(j);parsed=true;console.log('ESPN OK via',proxy||'direct');}}
+        if(r.ok){const j=await r.json();if(j&&j.events){window._lastESPNRaw=j;parseESPN(j);parsed=true;console.log('ESPN OK via',proxy||'direct');}}
       }catch(e){}
     }
   }
@@ -477,21 +477,21 @@ function playerMeta(name){
   return parts.length?`<div class="player-meta">${parts.join('')}</div>`:'';
 }
 
-// ── Debug: log ESPN data for first pool player ───────────────────
+// ── Debug: log raw ESPN data ─────────────────────────────────────
 window._debugESPN = function(){
-  const firstPlayer = pool[1].find(p=>p.player.trim());
-  if(!firstPlayer){alert('No players set');return;}
-  const name = firstPlayer.player.toLowerCase().trim();
-  const data = espnData[name] || Object.values(espnData).find(p=>p.name.toLowerCase().includes(name.split(' ').pop().toLowerCase()));
-  if(!data){alert('Player not found in ESPN data: '+firstPlayer.player+'\n\nAvailable: '+Object.keys(espnData).slice(0,5).join(', '));return;}
-  alert('ESPN data for '+data.name+':\n\n'+
-    'overallScore: '+data.overallScore+'\n'+
-    'rdScores: '+JSON.stringify(data.rdScores)+'\n'+
-    'thru: '+data.thru+'\n'+
-    'teeTime: '+data.teeTime+'\n'+
-    'status: '+data.status+'\n'+
-    'raw score field from ESPN is what we need to fix'
-  );
+  if(!window._lastESPNRaw){alert('No ESPN data fetched yet — click Refresh Scores first');return;}
+  const comps=window._lastESPNRaw?.events?.[0]?.competitions?.[0]?.competitors||[];
+  if(!comps.length){alert('No competitors found in ESPN response.\n\nTop-level keys: '+Object.keys(window._lastESPNRaw).join(', '));return;}
+  const c=comps[0];
+  const info='FIRST COMPETITOR RAW DATA:\n\n'+
+    'Keys: '+Object.keys(c).join(', ')+'\n\n'+
+    'athlete.displayName: '+c.athlete?.displayName+'\n'+
+    'score: '+JSON.stringify(c.score)+'\n'+
+    'status: '+JSON.stringify(c.status)+'\n'+
+    'linescores: '+JSON.stringify(c.linescores?.slice(0,2))+'\n'+
+    'statistics: '+JSON.stringify(c.statistics?.slice(0,3))+'\n'+
+    'sortOrder: '+c.sortOrder;
+  alert(info);
 };
 
 // ── Render round ─────────────────────────────────────────────────
