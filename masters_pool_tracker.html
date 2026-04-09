@@ -351,13 +351,19 @@ function parseESPN(data){
     comps.forEach(c=>{
       const name=c.athlete?.displayName||'';
       if(!name)return;
-      // linescores has one entry per round with value = score to par for that round
+      // linescores: each entry is a round, value = raw strokes, displayValue = score to par string
       const rdScores={};
       (c.linescores||[]).forEach((rd,i)=>{
-        const dv=rd.displayValue||'';
+        // Try displayValue first (+/-/E format), then value field
         let n=null;
-        if(dv==='E'||dv==='Even')n=0;
-        else{const parsed=parseInt(dv);if(!isNaN(parsed))n=parsed;}
+        const dv=(rd.displayValue||'').trim();
+        if(dv==='E'||dv==='Even'||dv==='0')n=0;
+        else if(dv){const p=parseInt(dv);if(!isNaN(p))n=p;}
+        // Fallback: value field is raw strokes, need par=72 to convert
+        if(n===null&&rd.value!==undefined&&rd.value!==null&&rd.value!==''){
+          const raw=Number(rd.value);
+          if(!isNaN(raw)&&raw>0)n=raw-72; // convert strokes to score to par
+        }
         if(n!==null)rdScores[i+1]=n;
       });
       // Thru from statistics
@@ -373,10 +379,18 @@ function parseESPN(data){
         }catch(e){}
       }
       const status=c.status?.type?.name||'';
-      const curScore=rdScores[currentRd]??null;
+      // Use the score field directly for current overall score to par
+      let overallScore=null;
+      const scoreVal=(c.score||'').trim();
+      if(scoreVal==='E'||scoreVal==='Even'||scoreVal==='0')overallScore=0;
+      else if(scoreVal){const n=parseInt(scoreVal);if(!isNaN(n))overallScore=n;}
+      // Current round score = the last linescore entry that has a value
+      const rdKeys=Object.keys(rdScores).map(Number).sort((a,b)=>a-b);
+      const latestRd=rdKeys[rdKeys.length-1]||currentRd;
+      const curScore=rdScores[latestRd]??null;
       espnData[name.toLowerCase()]={
         name,
-        overallScore:curScore,
+        overallScore,
         rdScores,
         thru:thru==='18'&&status.includes('Final')?'F':thru,
         teeTime,
@@ -406,7 +420,11 @@ function findPlayer(name){
 function getRdScore(round,name){
   const p=findPlayer(name);
   if(!p)return null;
-  return p.rdScores?.[round]??null;
+  // Use per-round score if available, otherwise use overallScore for current round
+  if(p.rdScores?.[round]!==undefined&&p.rdScores[round]!==null) return p.rdScores[round];
+  // For the active round, ESPN's c.score field = current round score to par
+  if(p.overallScore!==null&&p.overallScore!==undefined) return p.overallScore;
+  return null;
 }
 function fmt(s){if(s===null||s===undefined)return null;return s===0?'E':s>0?'+'+s:''+s;}
 function chipCls(s){if(s===null)return 'chip-nd';return s<0?'chip-neg':s>0?'chip-pos':'chip-even';}
