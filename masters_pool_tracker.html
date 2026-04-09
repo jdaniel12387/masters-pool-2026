@@ -186,6 +186,9 @@ input[type=checkbox].keep-cb{accent-color:var(--gold);width:13px;height:13px;cur
   <div id="panel-4" class="round-panel"></div>
   <div id="panel-setup" class="round-panel"></div>
   <div id="panel-live" class="round-panel"></div>
+
+  <!-- Debug output — shows fetch results on page -->
+  <pre id="debug-output" style="display:none;background:rgba(0,0,0,.5);color:#4ade80;padding:1rem;font-size:.65rem;margin-top:1rem;white-space:pre-wrap;border:1px solid rgba(74,222,128,.3);"></pre>
 </div>
 
 <script type="module">
@@ -272,41 +275,55 @@ function fbListen(){
 async function fetchESPN(){
   document.querySelectorAll('.refresh-btn').forEach(b=>{b.disabled=true;b.textContent='↻ Fetching…';});
   let parsed=false;
+  let debugLog=[];
 
-  // Try each proxy with ESPN API — log every attempt
   const attempts=[
     'https://api.allorigins.win/raw?url='+encodeURIComponent(ESPN_API),
     'https://corsproxy.io/?'+encodeURIComponent(ESPN_API),
     'https://thingproxy.freeboard.io/fetch/'+ESPN_API,
-    ESPN_API, // direct last
+    ESPN_API,
   ];
 
   for(const url of attempts){
     if(parsed)break;
+    const shortUrl=url.substring(0,50)+'...';
     try{
-      console.log('Trying:',url.substring(0,60));
       const r=await fetch(url,{headers:{'Accept':'application/json'}});
-      console.log('Response status:',r.status,'ok:',r.ok);
+      debugLog.push(`✓ Connected: ${shortUrl} → status ${r.status}`);
       if(r.ok){
         const j=await r.json();
-        console.log('JSON top keys:',Object.keys(j));
+        const topKeys=Object.keys(j).join(', ');
+        debugLog.push(`  Keys: ${topKeys}`);
         if(j&&j.events&&j.events.length>0){
+          const comp=j.events[0]?.competitions?.[0]?.competitors?.[0];
+          const name=comp?.athlete?.displayName||'?';
+          const score=comp?.score;
+          const linescores=JSON.stringify(comp?.linescores?.slice(0,2));
+          const stats=JSON.stringify(comp?.statistics?.slice(0,2));
+          debugLog.push(`  First player: ${name}`);
+          debugLog.push(`  score field: ${score}`);
+          debugLog.push(`  linescores: ${linescores}`);
+          debugLog.push(`  statistics: ${stats}`);
           window._lastESPNRaw=j;
           parseESPN(j);
           parsed=true;
-          console.log('SUCCESS with:',url.substring(0,60));
         } else {
-          console.log('No events in response');
+          debugLog.push(`  No events array found`);
         }
       }
-    }catch(e){console.log('Failed:',e.message);}
+    }catch(e){
+      debugLog.push(`✗ Failed: ${shortUrl} → ${e.message}`);
+    }
   }
 
-  if(!parsed){
-    console.warn('ALL fetch attempts failed');
-    // Show error in status
-    document.querySelectorAll('.stxt').forEach(el=>el.textContent='Score fetch failed — check console');
+  // Show debug info on page
+  const debugEl=document.getElementById('debug-output');
+  if(debugEl){
+    debugEl.style.display='block';
+    debugEl.textContent=debugLog.join('\n');
   }
+
+  if(!parsed) document.querySelectorAll('.stxt').forEach(el=>el.textContent='Score fetch failed — see debug below');
   lastFetch=new Date();
   for(let r=1;r<=4;r++)renderRound(r);
   renderLiveBoard();
