@@ -477,6 +477,23 @@ function playerMeta(name){
   return parts.length?`<div class="player-meta">${parts.join('')}</div>`:'';
 }
 
+// ── Debug: log ESPN data for first pool player ───────────────────
+window._debugESPN = function(){
+  const firstPlayer = pool[1].find(p=>p.player.trim());
+  if(!firstPlayer){alert('No players set');return;}
+  const name = firstPlayer.player.toLowerCase().trim();
+  const data = espnData[name] || Object.values(espnData).find(p=>p.name.toLowerCase().includes(name.split(' ').pop().toLowerCase()));
+  if(!data){alert('Player not found in ESPN data: '+firstPlayer.player+'\n\nAvailable: '+Object.keys(espnData).slice(0,5).join(', '));return;}
+  alert('ESPN data for '+data.name+':\n\n'+
+    'overallScore: '+data.overallScore+'\n'+
+    'rdScores: '+JSON.stringify(data.rdScores)+'\n'+
+    'thru: '+data.thru+'\n'+
+    'teeTime: '+data.teeTime+'\n'+
+    'status: '+data.status+'\n'+
+    'raw score field from ESPN is what we need to fix'
+  );
+};
+
 // ── Render round ─────────────────────────────────────────────────
 function renderRound(round){
   const indW=individualWinner(round);
@@ -525,6 +542,7 @@ function renderRound(round){
       <div class="status-pill"><span class="dot${Object.keys(espnData).length?' live':' off'}"></span><span>${Object.keys(espnData).length?'ESPN Live · '+RD_LABELS[round]:'Click refresh to load scores'}</span></div>
       <div class="btn-row">
         <span class="updated fetch-time"></span>
+        <button class="refresh-btn" style="font-size:.55rem;opacity:.6" onclick="window._debugESPN()">🔍 Debug</button>
         <button class="refresh-btn" id="espn-rbtn" onclick="window._fetchESPN()">↻ Refresh Scores</button>
       </div>
     </div>
