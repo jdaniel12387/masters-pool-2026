@@ -372,18 +372,22 @@ function parseESPN(data){
       const rdScores={};
       if(overallScore!==null) rdScores[currentRd]=overallScore;
 
-      // Thru — linescores length = holes played this round
+      // Thru — use statistics array 'thru' field, or status shortDetail
       let thru='';
-      if(c.linescores?.length>0){
-        const last=c.linescores[c.linescores.length-1];
-        // If status is final, show F
-        const statusDesc=c.status?.type?.description||'';
-        if(statusDesc.toLowerCase().includes('final')){
-          thru='F';
-        } else {
-          thru=String(c.linescores.length);
-        }
+      const thruStat=c.statistics?.find(s=>
+        s.name==='thru'||s.abbreviation==='THRU'||s.displayName==='Thru'
+      );
+      if(thruStat?.displayValue&&thruStat.displayValue!=='-'){
+        thru=thruStat.displayValue;
+      } else {
+        // Fallback: status shortDetail often contains "* 14" or "F" or "Thru 9"
+        const sd=c.status?.type?.shortDetail||'';
+        if(sd==='F'||sd.includes('Final')) thru='F';
+        else if(sd.includes('Thru')) thru=sd.replace('Thru','').trim();
+        else if(sd.match(/^\d+$/)) thru=sd;
       }
+      const statusDesc=c.status?.type?.description||c.status?.type?.name||'';
+      if(statusDesc.toLowerCase().includes('final')) thru='F';
 
       // Tee time — from statistics array, displayValue like "Thu Apr 09 08:50:00 PDT 2026"
       let teeTime='';
