@@ -419,19 +419,38 @@ function parseESPN(data){
 
       // ── Tee time ──────────────────────────────────────────────────
       let teeTime='';
+      // ESPN stores tee time in statistics array — try multiple field names
       const teeStat=c.statistics?.find(s=>
-        s.name==='teeTime'||s.displayName==='Tee Time'||
-        (s.displayValue&&(s.displayValue.includes('Apr')||s.displayValue.includes('AM')||s.displayValue.includes('PM')))
+        s.name==='teeTime'||s.name==='tee_time'||s.displayName==='Tee Time'||
+        (s.displayValue&&(s.displayValue.includes('Apr')||s.displayValue.includes('May')||
+         s.displayValue.includes('AM')||s.displayValue.includes('PM')))
       );
       if(teeStat?.displayValue){
-        try{
-          const d=new Date(teeStat.displayValue);
-          if(!isNaN(d)){
-            teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
-          } else if(teeStat.displayValue.match(/\d+:\d+/)){
-            teeTime=teeStat.displayValue; // already formatted
+        const raw=teeStat.displayValue.trim();
+        // If it already has AM/PM it may be formatted — try to extract time
+        if(raw.match(/\d+:\d+\s*(AM|PM)/i)){
+          // Extract just the time portion e.g. "8:50 AM" from "Thu Apr 09 08:50:00 PDT 2026"
+          const match=raw.match(/(\d+:\d+(?::\d+)?)\s*(AM|PM|PDT|EDT|EST|PST|CDT|CST)?/i);
+          if(match){
+            try{
+              // Parse as date to convert to ET
+              const d=new Date(raw);
+              if(!isNaN(d)){
+                teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
+              } else {
+                teeTime=match[1]+(match[2]?' '+match[2]:'')+' ET';
+              }
+            }catch(e){ teeTime=raw; }
           }
-        }catch(e){}
+        } else {
+          // Try parsing as full date string
+          try{
+            const d=new Date(raw);
+            if(!isNaN(d)){
+              teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
+            }
+          }catch(e){ teeTime=raw; }
+        }
       }
 
       espnData[name.toLowerCase()]={
@@ -508,21 +527,22 @@ function playerMeta(name){
   const p=findPlayer(name);
   if(!p)return '';
   let parts=[];
-  if(p.teeTime){
-    try{
-      const d=new Date(p.teeTime);
-      if(!isNaN(d)){
-        const t=d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'});
-        parts.push(`<span class="meta-pill meta-upcoming">⏱ ${t} ET</span>`);
-      }
-    }catch(e){}
+
+  // Tee time — already formatted as "10:30 AM ET" or similar
+  if(p.teeTime&&p.teeTime.trim()){
+    parts.push(`<span class="meta-pill meta-upcoming">⏱ ${p.teeTime}</span>`);
   }
-  if(p.thru){
-    const isLive=p.status&&p.status.toLowerCase().includes('in');
-    const cls=isLive?'meta-live':'meta-complete';
-    const label=p.thru==='F'?'✓ Finished':(isLive?`🟢 Hole ${p.thru}`:`Thru ${p.thru}`);
+
+  // Thru — holes played
+  if(p.thru&&p.thru.toString().trim()){
+    const thruStr=p.thru.toString().trim();
+    const isLive=p.status&&(p.status.toLowerCase().includes('progress')||p.status.toLowerCase().includes('active')||p.status.toLowerCase().includes('playing'));
+    const isFinished=thruStr==='F'||thruStr==='18'||p.status.toLowerCase().includes('final');
+    let cls=isFinished?'meta-complete':isLive?'meta-live':'meta-upcoming';
+    let label=isFinished?'✓ Finished':`🟢 Thru ${thruStr}`;
     parts.push(`<span class="meta-pill ${cls}">${label}</span>`);
   }
+
   return parts.length?`<div class="player-meta">${parts.join('')}</div>`:'';
 }
 
@@ -701,10 +721,55 @@ function buildAC(id,val,onChange){
 
 // ── Global actions ───────────────────────────────────────────────
 window._fetchESPN = fetchESPN;
-window._doSave = async function(){await fbSave();for(let r=1;r<=4;r++)renderRound(r);showRound(1);fetchESPN();};
-window._toggleKeep = (r,i,v)=>{pool[r][i].keep=v;};
-window._copyToNext = (r,i)=>{if(r>=4)return;const p=pool[r][i].player;if(!p.trim())return;pool[r+1][i].player=p;renderSetup();};
-window._applyKeeps = ()=>{for(let r=1;r<=3;r++)pool[r].forEach((p,i)=>{if(p.keep&&p.player.trim())pool[r+1][i].player=p.player;});renderSetup();};
+
+window._doSave = async function(){
+  // Apply keeps before saving so carryovers are included
+  for(let r=1;r<=3;r++){
+    pool[r].forEach((p,i)=>{
+      if(p.keep&&p.player.trim()&&!pool[r+1][i].player.trim()){
+        pool[r+1][i].player=p.player;
+      }
+    });
+  }
+  await fbSave();
+  for(let r=1;r<=4;r++)renderRound(r);
+  showRound(1);
+  fetchESPN();
+};
+
+window._toggleKeep = (r,i,v)=>{
+  pool[r][i].keep=v;
+  // Immediately apply/remove the carryover in the next round's input
+  if(r<4){
+    if(v&&pool[r][i].player.trim()){
+      // Copy player to next round if slot is empty
+      if(!pool[r+1][i].player.trim()){
+        pool[r+1][i].player=pool[r][i].player;
+      }
+    }
+  }
+};
+
+window._copyToNext = (r,i)=>{
+  if(r>=4)return;
+  const player=pool[r][i].player;
+  if(!player.trim())return;
+  pool[r+1][i].player=player;
+  renderSetup();
+};
+
+window._applyKeeps = ()=>{
+  for(let r=1;r<=3;r++){
+    pool[r].forEach((p,i)=>{
+      if(p.keep&&p.player.trim()){
+        pool[r+1][i].player=p.player;
+      }
+    });
+  }
+  renderSetup();
+  // Auto-save after applying keeps
+  fbSave();
+};
 
 window.showRound = function(r){
   document.querySelectorAll('.round-panel').forEach(p=>p.classList.remove('active'));
