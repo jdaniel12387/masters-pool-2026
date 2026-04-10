@@ -404,11 +404,11 @@ function parseESPN(data){
         stats.forEach(s=>{
           const dv=(s.displayValue||'').trim();
           // Tee time stat: contains a date string like "Thu Apr 09 09:19:00 PDT 2026"
-          if(dv.includes('PDT')||dv.includes('EDT')||dv.includes('PST')||dv.includes('EST')){
+          if(dv.includes('PDT')||dv.includes('EDT')||dv.includes('PST')||dv.includes('EST')||dv.includes('CDT')||dv.includes('CST')){
             try{
               const d=new Date(dv);
               if(!isNaN(d)){
-                teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
+                teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Chicago'})+' CT';
               }
             }catch(e){ teeTime=dv; }
           }
@@ -427,8 +427,8 @@ function parseESPN(data){
       if(!teeTime||!thru){
         (c.statistics||[]).forEach(s=>{
           const dv=(s.displayValue||'').trim();
-          if(!teeTime&&(dv.includes('PDT')||dv.includes('EDT'))){
-            try{const d=new Date(dv);if(!isNaN(d))teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';}catch(e){}
+          if(!teeTime&&(dv.includes('PDT')||dv.includes('EDT')||dv.includes('CDT')||dv.includes('CST'))){
+            try{const d=new Date(dv);if(!isNaN(d))teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Chicago'})+' CT';}catch(e){}
           }
           const n=parseInt(dv);
           if(!thru&&!isNaN(n)&&n>=1&&n<=18) thru=String(n);
@@ -442,10 +442,10 @@ function parseESPN(data){
           const stats2=ls.statistics?.categories?.[0]?.stats||[];
           for(const s of stats2){
             const dv=(s.displayValue||'').trim();
-            if(dv.includes('PDT')||dv.includes('EDT')||dv.includes('PST')||dv.includes('EST')){
+            if(dv.includes('PDT')||dv.includes('EDT')||dv.includes('PST')||dv.includes('EST')||dv.includes('CDT')||dv.includes('CST')){
               try{
                 const d=new Date(dv);
-                if(!isNaN(d)){teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';break;}
+                if(!isNaN(d)){teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Chicago'})+' CT';break;}
               }catch(e){}
             }
           }
@@ -542,7 +542,7 @@ function playerMeta(name){
   if(!p)return '';
   let parts=[];
 
-  // Tee time — already formatted as "10:30 AM ET" or similar
+  // Tee time — already formatted as "10:30 AM CT" or similar
   if(p.teeTime&&p.teeTime.trim()){
     parts.push(`<span class="meta-pill meta-upcoming">⏱ ${p.teeTime}</span>`);
   }
