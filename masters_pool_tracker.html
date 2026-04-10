@@ -353,26 +353,55 @@ function parseMasters(data){
   }catch(e){console.error('Masters parse error',e);}
 }
 
-// Parse ESPN JSON — correctly extract per-round scores
+// Parse ESPN JSON — extract per-round scores correctly
+// ESPN's c.score = CUMULATIVE tournament total (not what we want)
+// ESPN's c.linescores = array of rounds, each with scoreType.displayValue = that round's score to par
 function parseESPN(data){
   espnData={};
   try{
     const comps=data?.events?.[0]?.competitions?.[0]?.competitors||[];
     const currentRd=(data?.events?.[0]?.competitions?.[0]?.status?.period)||1;
+
     comps.forEach(c=>{
       const name=c.athlete?.displayName||'';
       if(!name)return;
 
-      // c.score = current round score to par as string ("-4", "E", "+2", "0")
-      let overallScore=null;
-      const scoreVal=String(c.score||'').trim();
-      if(scoreVal==='E'||scoreVal==='Even'||scoreVal==='0')overallScore=0;
-      else if(scoreVal!==''){const n=parseInt(scoreVal);if(!isNaN(n))overallScore=n;}
-
+      // ── Per-round scores from linescores ──────────────────────────
+      // Each entry in linescores = one round
+      // scoreType.displayValue = that round's score to par (e.g. "-4", "E", "+2")
+      // value = raw strokes for that round (e.g. 68, 72, 75)
       const rdScores={};
-      if(overallScore!==null) rdScores[currentRd]=overallScore;
+      const PAR=72; // Augusta National par
 
-      // Thru — use statistics array 'thru' field, or status shortDetail
+      (c.linescores||[]).forEach((ls,i)=>{
+        const rdNum=i+1;
+        let score=null;
+
+        // Try scoreType.displayValue first — this is score to par for that round
+        const stDV=(ls.scoreType?.displayValue||'').trim();
+        if(stDV==='E'||stDV==='Even')score=0;
+        else if(stDV!==''){const n=parseInt(stDV);if(!isNaN(n))score=n;}
+
+        // Fallback: displayValue on the linescore itself
+        if(score===null){
+          const dv=(ls.displayValue||'').trim();
+          if(dv==='E'||dv==='Even')score=0;
+          else if(dv!==''){const n=parseInt(dv);if(!isNaN(n))score=n;}
+        }
+
+        // Last fallback: raw strokes - par
+        if(score===null&&ls.value&&Number(ls.value)>0){
+          score=Number(ls.value)-PAR;
+        }
+
+        if(score!==null) rdScores[rdNum]=score;
+      });
+
+      // For current active round, if no linescore entry yet use 0 (hasn't started)
+      // But only store if we have data
+      const currentRdScore=rdScores[currentRd]??null;
+
+      // ── Thru (holes played this round) ────────────────────────────
       let thru='';
       const thruStat=c.statistics?.find(s=>
         s.name==='thru'||s.abbreviation==='THRU'||s.displayName==='Thru'
@@ -380,43 +409,46 @@ function parseESPN(data){
       if(thruStat?.displayValue&&thruStat.displayValue!=='-'){
         thru=thruStat.displayValue;
       } else {
-        // Fallback: status shortDetail often contains "* 14" or "F" or "Thru 9"
         const sd=c.status?.type?.shortDetail||'';
-        if(sd==='F'||sd.includes('Final')) thru='F';
-        else if(sd.includes('Thru')) thru=sd.replace('Thru','').trim();
+        if(sd==='F'||sd.toLowerCase().includes('final')) thru='F';
+        else if(sd.toLowerCase().includes('thru')) thru=sd.replace(/thru/i,'').trim();
         else if(sd.match(/^\d+$/)) thru=sd;
       }
       const statusDesc=c.status?.type?.description||c.status?.type?.name||'';
       if(statusDesc.toLowerCase().includes('final')) thru='F';
 
-      // Tee time — from statistics array, displayValue like "Thu Apr 09 08:50:00 PDT 2026"
+      // ── Tee time ──────────────────────────────────────────────────
       let teeTime='';
       const teeStat=c.statistics?.find(s=>
         s.name==='teeTime'||s.displayName==='Tee Time'||
-        (s.displayValue&&s.displayValue.includes('Apr'))
+        (s.displayValue&&(s.displayValue.includes('Apr')||s.displayValue.includes('AM')||s.displayValue.includes('PM')))
       );
       if(teeStat?.displayValue){
         try{
           const d=new Date(teeStat.displayValue);
           if(!isNaN(d)){
             teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
+          } else if(teeStat.displayValue.match(/\d+:\d+/)){
+            teeTime=teeStat.displayValue; // already formatted
           }
         }catch(e){}
       }
 
-      const status=c.status?.type?.description||c.status?.type?.name||'';
-
       espnData[name.toLowerCase()]={
         name,
-        overallScore,
-        rdScores,
+        overallScore:currentRdScore, // current round score to par (NOT cumulative)
+        rdScores,                    // all rounds' individual scores to par
         thru,
         teeTime,
-        status,
+        status:statusDesc,
         position:c.sortOrder||999
       };
     });
-    console.log('ESPN parsed',Object.keys(espnData).length,'players, round',currentRd);
+
+    console.log(`ESPN parsed ${Object.keys(espnData).length} players, round ${currentRd}`);
+    // Log sample to verify scores
+    const sample=Object.values(espnData).slice(0,3);
+    sample.forEach(p=>console.log(p.name,'rdScores:',JSON.stringify(p.rdScores),'thru:',p.thru));
   }catch(e){console.error('ESPN parse error',e);}
 }
 
@@ -438,10 +470,9 @@ function findPlayer(name){
 function getRdScore(round,name){
   const p=findPlayer(name);
   if(!p)return null;
-  // Use per-round score if available, otherwise use overallScore for current round
+  // Only return the score for that specific round — never cumulative
   if(p.rdScores?.[round]!==undefined&&p.rdScores[round]!==null) return p.rdScores[round];
-  // For the active round, ESPN's c.score field = current round score to par
-  if(p.overallScore!==null&&p.overallScore!==undefined) return p.overallScore;
+  // If this is the current active round and they haven't started yet, return null (not 0)
   return null;
 }
 function fmt(s){if(s===null||s===undefined)return null;return s===0?'E':s>0?'+'+s:''+s;}
