@@ -354,109 +354,94 @@ function parseMasters(data){
 }
 
 // Parse ESPN JSON — extract per-round scores correctly
-// ESPN's c.score = CUMULATIVE tournament total (not what we want)
-// ESPN's c.linescores = array of rounds, each with scoreType.displayValue = that round's score to par
 function parseESPN(data){
   espnData={};
   try{
     const comps=data?.events?.[0]?.competitions?.[0]?.competitors||[];
-    const currentRd=(data?.events?.[0]?.competitions?.[0]?.status?.period)||1;
+    const currentRd=parseInt(data?.events?.[0]?.competitions?.[0]?.status?.period)||1;
+    const PAR=72;
 
     comps.forEach(c=>{
       const name=c.athlete?.displayName||'';
       if(!name)return;
 
-      // ── Per-round scores from linescores ──────────────────────────
-      // Each entry in linescores = one round
-      // scoreType.displayValue = that round's score to par (e.g. "-4", "E", "+2")
-      // value = raw strokes for that round (e.g. 68, 72, 75)
+      // ── Per-round scores ─────────────────────────────────────────
+      // linescores array: one entry per ROUND (not per hole)
+      // Each entry: { value: raw_strokes, displayValue: score_to_par_string }
       const rdScores={};
-      const PAR=72; // Augusta National par
-
       (c.linescores||[]).forEach((ls,i)=>{
         const rdNum=i+1;
         let score=null;
-
-        // Try scoreType.displayValue first — this is score to par for that round
-        const stDV=(ls.scoreType?.displayValue||'').trim();
-        if(stDV==='E'||stDV==='Even')score=0;
-        else if(stDV!==''){const n=parseInt(stDV);if(!isNaN(n))score=n;}
-
-        // Fallback: displayValue on the linescore itself
-        if(score===null){
-          const dv=(ls.displayValue||'').trim();
-          if(dv==='E'||dv==='Even')score=0;
-          else if(dv!==''){const n=parseInt(dv);if(!isNaN(n))score=n;}
+        // displayValue is score to par: "-4", "E", "+2", "68" (raw strokes)
+        const dv=(ls.displayValue||'').trim();
+        if(dv==='E'||dv==='Even')score=0;
+        else if(dv!==''){
+          const n=parseInt(dv);
+          if(!isNaN(n)){
+            // If value > 30, it's raw strokes not score to par — convert
+            score=(Math.abs(n)>30)?n-PAR:n;
+          }
         }
-
-        // Last fallback: raw strokes - par
-        if(score===null&&ls.value&&Number(ls.value)>0){
-          score=Number(ls.value)-PAR;
+        // Fallback: ls.value is raw strokes
+        if(score===null&&ls.value!==undefined&&ls.value!==null&&ls.value!==''){
+          const raw=Number(ls.value);
+          if(!isNaN(raw)&&raw>30) score=raw-PAR;
         }
-
         if(score!==null) rdScores[rdNum]=score;
       });
 
-      // For current active round, if no linescore entry yet use 0 (hasn't started)
-      // But only store if we have data
-      const currentRdScore=rdScores[currentRd]??null;
-
-      // ── Thru (holes played this round) ────────────────────────────
+      // ── Thru ─────────────────────────────────────────────────────
+      // ESPN stores "thru" in statistics array AND in status.type.shortDetail
       let thru='';
-      const thruStat=c.statistics?.find(s=>
-        s.name==='thru'||s.abbreviation==='THRU'||s.displayName==='Thru'
-      );
-      if(thruStat?.displayValue&&thruStat.displayValue!=='-'){
-        thru=thruStat.displayValue;
-      } else {
-        const sd=c.status?.type?.shortDetail||'';
-        if(sd==='F'||sd.toLowerCase().includes('final')) thru='F';
-        else if(sd.toLowerCase().includes('thru')) thru=sd.replace(/thru/i,'').trim();
-        else if(sd.match(/^\d+$/)) thru=sd;
+      // Try statistics first
+      for(const s of (c.statistics||[])){
+        const n=(s.name||'').toLowerCase();
+        const dn=(s.displayName||'').toLowerCase();
+        if(n==='thru'||dn==='thru'||n.includes('thru')){
+          const v=(s.displayValue||'').trim();
+          if(v&&v!=='-'&&v!=='--'){thru=v;break;}
+        }
       }
-      const statusDesc=c.status?.type?.description||c.status?.type?.name||'';
+      // Try status shortDetail: "F", "Thru 14", "14"
+      if(!thru){
+        const sd=(c.status?.type?.shortDetail||'').trim();
+        if(sd==='F') thru='F';
+        else if(/^\d+$/.test(sd)) thru=sd;
+        else if(sd.toLowerCase().includes('thru')){
+          const m=sd.match(/\d+/);
+          if(m) thru=m[0];
+        }
+      }
+      // Status description override
+      const statusDesc=(c.status?.type?.description||c.status?.type?.name||'').trim();
       if(statusDesc.toLowerCase().includes('final')) thru='F';
 
-      // ── Tee time ──────────────────────────────────────────────────
+      // ── Tee time ─────────────────────────────────────────────────
+      // ESPN statistics array has a teeTime entry with displayValue
       let teeTime='';
-      // ESPN stores tee time in statistics array — try multiple field names
-      const teeStat=c.statistics?.find(s=>
-        s.name==='teeTime'||s.name==='tee_time'||s.displayName==='Tee Time'||
-        (s.displayValue&&(s.displayValue.includes('Apr')||s.displayValue.includes('May')||
-         s.displayValue.includes('AM')||s.displayValue.includes('PM')))
-      );
-      if(teeStat?.displayValue){
-        const raw=teeStat.displayValue.trim();
-        // If it already has AM/PM it may be formatted — try to extract time
-        if(raw.match(/\d+:\d+\s*(AM|PM)/i)){
-          // Extract just the time portion e.g. "8:50 AM" from "Thu Apr 09 08:50:00 PDT 2026"
-          const match=raw.match(/(\d+:\d+(?::\d+)?)\s*(AM|PM|PDT|EDT|EST|PST|CDT|CST)?/i);
-          if(match){
+      for(const s of (c.statistics||[])){
+        const n=(s.name||'').toLowerCase();
+        const dn=(s.displayName||'').toLowerCase();
+        if(n==='teetime'||n==='tee_time'||dn.includes('tee')){
+          const v=(s.displayValue||'').trim();
+          if(v&&v!=='-'){
+            // Convert to ET — handles "Fri Apr 10 08:30:00 EDT 2026" format
             try{
-              // Parse as date to convert to ET
-              const d=new Date(raw);
+              const d=new Date(v);
               if(!isNaN(d)){
                 teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
-              } else {
-                teeTime=match[1]+(match[2]?' '+match[2]:'')+' ET';
+              } else if(/\d+:\d+/.test(v)){
+                teeTime=v; // already readable
               }
-            }catch(e){ teeTime=raw; }
+            }catch(e){ teeTime=v; }
+            break;
           }
-        } else {
-          // Try parsing as full date string
-          try{
-            const d=new Date(raw);
-            if(!isNaN(d)){
-              teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
-            }
-          }catch(e){ teeTime=raw; }
         }
       }
 
       espnData[name.toLowerCase()]={
         name,
-        overallScore:currentRdScore, // current round score to par (NOT cumulative)
-        rdScores,                    // all rounds' individual scores to par
+        rdScores,
         thru,
         teeTime,
         status:statusDesc,
@@ -464,10 +449,9 @@ function parseESPN(data){
       };
     });
 
-    console.log(`ESPN parsed ${Object.keys(espnData).length} players, round ${currentRd}`);
-    // Log sample to verify scores
-    const sample=Object.values(espnData).slice(0,3);
-    sample.forEach(p=>console.log(p.name,'rdScores:',JSON.stringify(p.rdScores),'thru:',p.thru));
+    console.log(`ESPN: ${Object.keys(espnData).length} players, round ${currentRd}`);
+    const sample=Object.values(espnData).find(p=>p.thru);
+    if(sample) console.log('Sample:',sample.name,'rdScores:',sample.rdScores,'thru:',sample.thru,'tee:',sample.teeTime);
   }catch(e){console.error('ESPN parse error',e);}
 }
 
@@ -489,9 +473,9 @@ function findPlayer(name){
 function getRdScore(round,name){
   const p=findPlayer(name);
   if(!p)return null;
-  // Only return the score for that specific round — never cumulative
-  if(p.rdScores?.[round]!==undefined&&p.rdScores[round]!==null) return p.rdScores[round];
-  // If this is the current active round and they haven't started yet, return null (not 0)
+  // Return that specific round's score — never cumulative
+  const s=p.rdScores?.[round];
+  if(s!==undefined&&s!==null) return s;
   return null;
 }
 function fmt(s){if(s===null||s===undefined)return null;return s===0?'E':s>0?'+'+s:''+s;}
@@ -792,12 +776,30 @@ function startAutoRefresh(){
   },3*60*1000);
 }
 
+// ── Determine current round from date ────────────────────────────
+function getCurrentRound(){
+  const now=new Date();
+  const et=new Date(now.toLocaleString('en-US',{timeZone:'America/New_York'}));
+  const month=et.getMonth()+1; // 1-12
+  const day=et.getDate();
+  // 2026 Masters: Apr 9 (Thu)=R1, Apr 10 (Fri)=R2, Apr 11 (Sat)=R3, Apr 12 (Sun)=R4
+  if(month===4){
+    if(day===9)  return 1;
+    if(day===10) return 2;
+    if(day===11) return 3;
+    if(day>=12)  return 4;
+  }
+  return 1; // default
+}
+
 // ── Init ─────────────────────────────────────────────────────────
 for(let r=1;r<=4;r++)renderRound(r);
 renderLiveBoard();
 document.getElementById('loading-screen').style.display='none';
 document.getElementById('app').style.display='block';
 fbListen();
+// Auto-select current round based on today's date
+showRound(getCurrentRound());
 fetchESPN();
 startAutoRefresh();
 </script>
