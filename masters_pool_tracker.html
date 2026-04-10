@@ -654,14 +654,17 @@ function renderLiveBoard(){
 
   const rows=sorted.length?sorted.map((p,i)=>{
     const inPool=allPoolPlayers.has(p.name.toLowerCase());
-    const s=p.overallScore;
+    // Use current round score for live board display
+    const currentRd=getCurrentRound();
+    const s=p.rdScores?.[currentRd]??null;
     const cls=s===null?'c-nd':s<0?'c-neg':s>0?'c-pos':'c-e';
     const fmtS=fmt(s)??'—';
     let statusHTML='—';
-    if(p.thru==='F') statusHTML=`<span class="status-done">F</span>`;
+    if(p.thru==='F') statusHTML=`<span class="status-done">✓ F</span>`;
     else if(p.thru) statusHTML=`<span class="status-live">▶ ${p.thru}</span>`;
     else if(p.teeTime){
-      try{const d=new Date(p.teeTime);const t=d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'});statusHTML=`<span class="status-wait">${t}</span>`;}catch(e){}
+      // teeTime is already formatted as "3:32 PM ET" — display directly
+      statusHTML=`<span class="status-wait">${p.teeTime}</span>`;
     }
     return `<div class="espn-row">
       <div class="espn-pos">${i+1}</div>
