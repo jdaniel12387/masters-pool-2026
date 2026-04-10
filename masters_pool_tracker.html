@@ -452,6 +452,24 @@ function parseESPN(data){
     console.log(`ESPN: ${Object.keys(espnData).length} players, round ${currentRd}`);
     const sample=Object.values(espnData).find(p=>p.thru);
     if(sample) console.log('Sample:',sample.name,'rdScores:',sample.rdScores,'thru:',sample.thru,'tee:',sample.teeTime);
+
+    // On-page debug — show first competitor's raw fields
+    const debugEl=document.getElementById('debug-output');
+    if(debugEl&&comps.length>0){
+      const c0=comps[0];
+      debugEl.style.display='block';
+      debugEl.textContent=
+        'Player: '+c0.athlete?.displayName+'\n'+
+        'c.score: '+c0.score+'\n'+
+        'status.type: '+JSON.stringify(c0.status?.type)+'\n'+
+        'linescores[0]: '+JSON.stringify(c0.linescores?.[0])+'\n'+
+        'linescores[1]: '+JSON.stringify(c0.linescores?.[1])+'\n'+
+        'statistics: '+JSON.stringify(c0.statistics?.slice(0,4))+'\n'+
+        'sortOrder: '+c0.sortOrder+'\n'+
+        '---parsed rdScores: '+JSON.stringify(espnData[c0.athlete?.displayName?.toLowerCase()]?.rdScores)+'\n'+
+        '---parsed thru: '+espnData[c0.athlete?.displayName?.toLowerCase()]?.thru+'\n'+
+        '---parsed teeTime: '+espnData[c0.athlete?.displayName?.toLowerCase()]?.teeTime;
+    }
   }catch(e){console.error('ESPN parse error',e);}
 }
 
