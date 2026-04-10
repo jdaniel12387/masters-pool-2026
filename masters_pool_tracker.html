@@ -366,78 +366,56 @@ function parseESPN(data){
       if(!name)return;
 
       // ── Per-round scores ─────────────────────────────────────────
-      // linescores array: one entry per ROUND (not per hole)
-      // Each entry: { value: raw_strokes, displayValue: score_to_par_string }
+      // ACTUAL ESPN structure confirmed:
+      // c.linescores = array, one entry per ROUND
+      // Each entry: { value: raw_strokes (e.g.67), displayValue: score_to_par (e.g."-5"), period: round_num }
+      // Inner linescores inside each entry = per-hole data (ignore for our purposes)
       const rdScores={};
-      (c.linescores||[]).forEach((ls,i)=>{
-        const rdNum=i+1;
+      (c.linescores||[]).forEach(ls=>{
+        const rdNum=parseInt(ls.period)||0;
+        if(rdNum<1||rdNum>4) return;
         let score=null;
-        // displayValue is score to par: "-4", "E", "+2", "68" (raw strokes)
+        // displayValue IS the score to par string: "-5", "E", "+2"
         const dv=(ls.displayValue||'').trim();
-        if(dv==='E'||dv==='Even')score=0;
+        if(dv==='E'||dv==='Even') score=0;
         else if(dv!==''){
           const n=parseInt(dv);
-          if(!isNaN(n)){
-            // If value > 30, it's raw strokes not score to par — convert
-            score=(Math.abs(n)>30)?n-PAR:n;
-          }
-        }
-        // Fallback: ls.value is raw strokes
-        if(score===null&&ls.value!==undefined&&ls.value!==null&&ls.value!==''){
-          const raw=Number(ls.value);
-          if(!isNaN(raw)&&raw>30) score=raw-PAR;
+          if(!isNaN(n)) score=n;
         }
         if(score!==null) rdScores[rdNum]=score;
       });
 
-      // ── Thru ─────────────────────────────────────────────────────
-      // ESPN stores "thru" in statistics array AND in status.type.shortDetail
+      // ── Thru & Tee Time ──────────────────────────────────────────
+      // ESPN stores these in the statistics array
+      // status is undefined on competitor level — use statistics only
       let thru='';
-      // Try statistics first
-      for(const s of (c.statistics||[])){
-        const n=(s.name||'').toLowerCase();
-        const dn=(s.displayName||'').toLowerCase();
-        if(n==='thru'||dn==='thru'||n.includes('thru')){
-          const v=(s.displayValue||'').trim();
-          if(v&&v!=='-'&&v!=='--'){thru=v;break;}
+      let teeTime='';
+
+      (c.statistics||[]).forEach(s=>{
+        const nm=(s.name||s.abbreviation||s.displayName||'').toLowerCase();
+        const val=(s.displayValue||'').trim();
+        if(!val||val==='-'||val==='--') return;
+
+        // Thru holes
+        if(nm.includes('thru')||nm==='hole'){
+          thru=val==='18'?'F':val;
         }
-      }
-      // Try status shortDetail: "F", "Thru 14", "14"
-      if(!thru){
-        const sd=(c.status?.type?.shortDetail||'').trim();
-        if(sd==='F') thru='F';
-        else if(/^\d+$/.test(sd)) thru=sd;
-        else if(sd.toLowerCase().includes('thru')){
-          const m=sd.match(/\d+/);
-          if(m) thru=m[0];
+        // Tee time — various field names ESPN uses
+        if(nm.includes('tee')||nm.includes('start')){
+          try{
+            const d=new Date(val);
+            if(!isNaN(d)){
+              teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
+            } else {
+              teeTime=val;
+            }
+          }catch(e){ teeTime=val; }
         }
-      }
-      // Status description override
+      });
+
+      // Status for finished players
       const statusDesc=(c.status?.type?.description||c.status?.type?.name||'').trim();
       if(statusDesc.toLowerCase().includes('final')) thru='F';
-
-      // ── Tee time ─────────────────────────────────────────────────
-      // ESPN statistics array has a teeTime entry with displayValue
-      let teeTime='';
-      for(const s of (c.statistics||[])){
-        const n=(s.name||'').toLowerCase();
-        const dn=(s.displayName||'').toLowerCase();
-        if(n==='teetime'||n==='tee_time'||dn.includes('tee')){
-          const v=(s.displayValue||'').trim();
-          if(v&&v!=='-'){
-            // Convert to ET — handles "Fri Apr 10 08:30:00 EDT 2026" format
-            try{
-              const d=new Date(v);
-              if(!isNaN(d)){
-                teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
-              } else if(/\d+:\d+/.test(v)){
-                teeTime=v; // already readable
-              }
-            }catch(e){ teeTime=v; }
-            break;
-          }
-        }
-      }
 
       espnData[name.toLowerCase()]={
         name,
@@ -457,18 +435,16 @@ function parseESPN(data){
     const debugEl=document.getElementById('debug-output');
     if(debugEl&&comps.length>0){
       const c0=comps[0];
+      const statsNames=(c0.statistics||[]).map(s=>`${s.name||s.abbreviation||s.displayName}="${s.displayValue}"`).join(', ');
       debugEl.style.display='block';
       debugEl.textContent=
         'Player: '+c0.athlete?.displayName+'\n'+
         'c.score: '+c0.score+'\n'+
-        'status.type: '+JSON.stringify(c0.status?.type)+'\n'+
-        'linescores[0]: '+JSON.stringify(c0.linescores?.[0])+'\n'+
-        'linescores[1]: '+JSON.stringify(c0.linescores?.[1])+'\n'+
-        'statistics: '+JSON.stringify(c0.statistics?.slice(0,4))+'\n'+
-        'sortOrder: '+c0.sortOrder+'\n'+
+        'linescores: '+JSON.stringify((c0.linescores||[]).map(ls=>({period:ls.period,dv:ls.displayValue,val:ls.value})))+'\n'+
+        'statistics fields: '+statsNames+'\n'+
         '---parsed rdScores: '+JSON.stringify(espnData[c0.athlete?.displayName?.toLowerCase()]?.rdScores)+'\n'+
-        '---parsed thru: '+espnData[c0.athlete?.displayName?.toLowerCase()]?.thru+'\n'+
-        '---parsed teeTime: '+espnData[c0.athlete?.displayName?.toLowerCase()]?.teeTime;
+        '---parsed thru: "'+espnData[c0.athlete?.displayName?.toLowerCase()]?.thru+'"\n'+
+        '---parsed teeTime: "'+espnData[c0.athlete?.displayName?.toLowerCase()]?.teeTime+'"';
     }
   }catch(e){console.error('ESPN parse error',e);}
 }
