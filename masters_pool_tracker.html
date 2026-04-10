@@ -386,36 +386,72 @@ function parseESPN(data){
       });
 
       // ── Thru & Tee Time ──────────────────────────────────────────
-      // ESPN stores these in the statistics array
-      // status is undefined on competitor level — use statistics only
+      // CONFIRMED: thru and teeTime are inside each linescore's statistics
+      // linescores[0] = Round 1, linescores[1] = Round 2, etc.
+      // Inside each: statistics.categories[0].stats = array of stat values
+      // stats order: [holes_completed, ?, ?, ?, ?, ?, thru_holes, total_holes, tee_time_string]
       let thru='';
       let teeTime='';
-
-      (c.statistics||[]).forEach(s=>{
-        const nm=(s.name||s.abbreviation||s.displayName||'').toLowerCase();
-        const val=(s.displayValue||'').trim();
-        if(!val||val==='-'||val==='--') return;
-
-        // Thru holes
-        if(nm.includes('thru')||nm==='hole'){
-          thru=val==='18'?'F':val;
-        }
-        // Tee time — various field names ESPN uses
-        if(nm.includes('tee')||nm.includes('start')){
-          try{
-            const d=new Date(val);
-            if(!isNaN(d)){
-              teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
-            } else {
-              teeTime=val;
-            }
-          }catch(e){ teeTime=val; }
-        }
-      });
-
-      // Status for finished players
       const statusDesc=(c.status?.type?.description||c.status?.type?.name||'').trim();
-      if(statusDesc.toLowerCase().includes('final')) thru='F';
+
+      // Get the current round's linescore entry (period matches round number)
+      const currentLs=(c.linescores||[]).find(ls=>parseInt(ls.period)===currentRd);
+      if(currentLs){
+        // Extract stats from nested structure: statistics.categories[0].stats
+        const stats=currentLs.statistics?.categories?.[0]?.stats||[];
+        // Find thru — look for a stat with a small integer value (holes played, 1-18)
+        // and tee time — look for a stat with a date string
+        stats.forEach(s=>{
+          const dv=(s.displayValue||'').trim();
+          // Tee time stat: contains a date string like "Thu Apr 09 09:19:00 PDT 2026"
+          if(dv.includes('PDT')||dv.includes('EDT')||dv.includes('PST')||dv.includes('EST')){
+            try{
+              const d=new Date(dv);
+              if(!isNaN(d)){
+                teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';
+              }
+            }catch(e){ teeTime=dv; }
+          }
+          // Thru stat: a number between 1-18 representing holes completed
+          const n=parseInt(dv);
+          if(!isNaN(n)&&n>=1&&n<=18&&!thru&&dv===String(n)){
+            thru=String(n);
+          }
+        });
+      }
+
+      // Check if player finished (all 18 holes)
+      if(thru==='18'||statusDesc.toLowerCase().includes('final')) thru='F';
+
+      // Also try top-level statistics array as fallback
+      if(!teeTime||!thru){
+        (c.statistics||[]).forEach(s=>{
+          const dv=(s.displayValue||'').trim();
+          if(!teeTime&&(dv.includes('PDT')||dv.includes('EDT'))){
+            try{const d=new Date(dv);if(!isNaN(d))teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';}catch(e){}
+          }
+          const n=parseInt(dv);
+          if(!thru&&!isNaN(n)&&n>=1&&n<=18) thru=String(n);
+        });
+      }
+
+      // Final fallback: scan ALL linescores for current round tee time
+      if(!teeTime){
+        for(const ls of (c.linescores||[])){
+          if(parseInt(ls.period)!==currentRd) continue;
+          const stats2=ls.statistics?.categories?.[0]?.stats||[];
+          for(const s of stats2){
+            const dv=(s.displayValue||'').trim();
+            if(dv.includes('PDT')||dv.includes('EDT')||dv.includes('PST')||dv.includes('EST')){
+              try{
+                const d=new Date(dv);
+                if(!isNaN(d)){teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';break;}
+              }catch(e){}
+            }
+          }
+          if(teeTime) break;
+        }
+      }
 
       espnData[name.toLowerCase()]={
         name,
