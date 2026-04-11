@@ -238,6 +238,58 @@ const MASTERS_FIELD = [
   "Neal Shipley","Evan Beck","Austin Greaser","Fred Couples","Mike Weir","Larry Mize","Bernhard Langer"
 ].sort((a,b)=>a.split(' ').pop().localeCompare(b.split(' ').pop()));
 
+// ── Official 2026 Masters Tee Times (CT) ─────────────────────────
+const OFFICIAL_TEE_TIMES = {
+  1: { // Thursday Round 1 — ET times converted to CT (-1hr)
+    "Tommy Fleetwood":"7:30 AM CT","Akshay Bhatia":"7:30 AM CT","Patrick Reed":"7:30 AM CT",
+    "Bryson DeChambeau":"8:07 AM CT","Matt Fitzpatrick":"8:07 AM CT","Xander Schauffele":"8:07 AM CT",
+    "Hideki Matsuyama":"8:19 AM CT","Collin Morikawa":"8:19 AM CT","Russell Henley":"8:19 AM CT",
+    "Rory McIlroy":"8:31 AM CT","Cameron Young":"8:31 AM CT",
+    "Jon Rahm":"9:31 AM CT","Justin Rose":"9:31 AM CT",
+    "Scottie Scheffler":"11:16 AM CT","Ludvig Åberg":"11:16 AM CT",
+    "Brooks Koepka":"10:53 AM CT","Sam Burns":"10:32 AM CT","Patrick Cantlay":"10:43 AM CT",
+    "Shane Lowry":"9:53 AM CT","Jason Day":"9:53 AM CT",
+  },
+  2: { // Friday Round 2 — ET times converted to CT
+    "Tommy Fleetwood":"12:32 PM CT","Akshay Bhatia":"12:32 PM CT","Patrick Reed":"12:32 PM CT",
+    "Bryson DeChambeau":"11:07 AM CT","Matt Fitzpatrick":"11:07 AM CT","Xander Schauffele":"11:07 AM CT",
+    "Hideki Matsuyama":"11:19 AM CT","Collin Morikawa":"11:19 AM CT","Russell Henley":"11:19 AM CT",
+    "Rory McIlroy":"11:31 AM CT","Cameron Young":"11:31 AM CT",
+    "Jon Rahm":"10:31 AM CT","Justin Rose":"10:31 AM CT",
+    "Scottie Scheffler":"7:30 AM CT","Ludvig Åberg":"7:30 AM CT",
+    "Brooks Koepka":"7:53 AM CT","Sam Burns":"10:32 AM CT","Patrick Cantlay":"9:43 AM CT",
+    "Shane Lowry":"12:44 PM CT","Jason Day":"8:53 AM CT",
+  },
+  3: { // Saturday Round 3 — official times CT (ET - 1hr)
+    "Kurt Kitayama":"8:31 AM CT","Alex Noren":"8:31 AM CT",
+    "Charl Schwartzel":"8:42 AM CT","Rasmus Højgaard":"8:42 AM CT",
+    "Jon Rahm":"8:53 AM CT","Si Woo Kim":"8:53 AM CT",
+    "Brian Harman":"9:04 AM CT","Corey Conners":"9:04 AM CT",
+    "Sergio Garcia":"9:15 AM CT","Maverick McNealy":"9:15 AM CT",
+    "Keegan Bradley":"9:26 AM CT","Viktor Hovland":"9:26 AM CT",
+    "Justin Thomas":"9:37 AM CT","Gary Woodland":"9:37 AM CT",
+    "Sam Stevens":"9:48 AM CT","Adam Scott":"9:48 AM CT",
+    "Marco Penge":"10:10 AM CT","Matt McCarty":"10:10 AM CT",
+    "Jordan Spieth":"10:21 AM CT","Sepp Straka":"10:21 AM CT",
+    "Aaron Rai":"10:32 AM CT","Jacob Bridgeman":"10:32 AM CT",
+    "Patrick Cantlay":"10:43 AM CT","Sungjae Im":"10:43 AM CT",
+    "Dustin Johnson":"10:54 AM CT","Russell Henley":"10:54 AM CT",
+    "Harris English":"11:05 AM CT","Ryan Gerard":"11:05 AM CT",
+    "Ludvig Åberg":"11:16 AM CT","Scottie Scheffler":"11:16 AM CT",
+    "Collin Morikawa":"11:38 AM CT","Brian Campbell":"11:38 AM CT",
+    "Nick Taylor":"11:49 AM CT","Matt Fitzpatrick":"11:49 AM CT",
+    "Wyndham Clark":"12:00 PM CT","Cameron Young":"12:00 PM CT",
+    "Tyrrell Hatton":"12:11 PM CT","Jason Day":"12:11 PM CT",
+    "Hideki Matsuyama":"12:22 PM CT","Shane Lowry":"12:22 PM CT",
+    "Max Homa":"12:44 PM CT","Xander Schauffele":"12:44 PM CT",
+    "Tommy Fleetwood":"12:55 PM CT","Brooks Koepka":"12:55 PM CT",
+    "Justin Rose":"1:06 PM CT","Akshay Bhatia":"1:06 PM CT",
+    "Bryson DeChambeau":"1:17 PM CT","Patrick Reed":"1:17 PM CT",
+    "Sam Burns":"1:50 PM CT","Rory McIlroy":"1:50 PM CT",
+  },
+  4: {}, // Round 4 tee times TBD — will update Sunday morning
+};
+
 // ── State ────────────────────────────────────────────────────────
 function defaultPool(){const p={};for(let r=1;r<=4;r++)p[r]=SNAKE.map((team,i)=>({pick:i+1,team,player:'',keep:false}));return p;}
 let pool = defaultPool();
@@ -391,24 +443,7 @@ function parseESPN(data){
       const statusDesc=(c.status?.type?.description||c.status?.type?.name||'').trim();
 
       function extractTeeTime(stats){
-        for(const s of stats){
-          const dv=(s.displayValue||'').trim();
-          if(dv.match(/\b(PDT|EDT|PST|EST|CDT|CST|MDT|MST)\b/)){
-            try{
-              // ESPN raw time is 3 hours ahead of actual CT time
-              // e.g. "14:32:00 PDT" = 11:32 AM CT actual
-              const timeMatch=dv.match(/(\d{2}):(\d{2}):\d{2}/);
-              if(timeMatch){
-                let hrs=parseInt(timeMatch[1])-3; // subtract 3 to get CT
-                if(hrs<0) hrs+=24;
-                const mins=timeMatch[2];
-                const ampm=hrs>=12?'PM':'AM';
-                hrs=hrs%12||12;
-                return `${hrs}:${mins} ${ampm} CT`;
-              }
-            }catch(e){}
-          }
-        }
+        // Not used — tee times are hardcoded from official Masters schedule
         return '';
       }
 
@@ -421,17 +456,16 @@ function parseESPN(data){
         return '';
       }
 
-      // ONLY use current round's linescore — never pull from a previous round
+      // ONLY use current round's linescore for thru holes
       const currentLs=(c.linescores||[]).find(ls=>parseInt(ls.period)===currentRd);
-      if(currentLs){
+      let thru='';
+      if(currentLs&&rdScores[currentRd]!==undefined){
         const stats=currentLs.statistics?.categories?.[0]?.stats||[];
-        teeTime=extractTeeTime(stats);
         thru=extractThru(stats);
-        // Only show thru if the round score exists (player has actually started)
-        if(rdScores[currentRd]===undefined) thru='';
       }
-      // If current round linescore doesn't exist yet = round hasn't started
-      // Leave teeTime and thru blank — ESPN will populate when round starts
+
+      // Look up official tee time from hardcoded schedule
+      const teeTime=OFFICIAL_TEE_TIMES[currentRd]?.[name]||'';
 
       if(thru==='18'||statusDesc.toLowerCase().includes('final')) thru='F';
 
