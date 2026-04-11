@@ -438,36 +438,23 @@ function parseESPN(data){
       });
 
       // ── Thru & Tee Time ──────────────────────────────────────────
-      let thru='';
-      let teeTime='';
       const statusDesc=(c.status?.type?.description||c.status?.type?.name||'').trim();
 
-      function extractTeeTime(stats){
-        // Not used — tee times are hardcoded from official Masters schedule
-        return '';
-      }
-
-      function extractThru(stats){
-        for(const s of stats){
-          const dv=(s.displayValue||'').trim();
-          const n=parseInt(dv);
-          if(!isNaN(n)&&n>=1&&n<=18&&dv===String(n)) return String(n);
-        }
-        return '';
-      }
-
-      // ONLY use current round's linescore for thru holes
+      // Get thru holes from current round's linescore only
       const currentLs=(c.linescores||[]).find(ls=>parseInt(ls.period)===currentRd);
       let thru='';
       if(currentLs&&rdScores[currentRd]!==undefined){
         const stats=currentLs.statistics?.categories?.[0]?.stats||[];
-        thru=extractThru(stats);
+        for(const s of stats){
+          const dv=(s.displayValue||'').trim();
+          const n=parseInt(dv);
+          if(!isNaN(n)&&n>=1&&n<=18&&dv===String(n)){thru=String(n);break;}
+        }
       }
-
-      // Look up official tee time from hardcoded schedule
-      const teeTime=OFFICIAL_TEE_TIMES[currentRd]?.[name]||'';
-
       if(thru==='18'||statusDesc.toLowerCase().includes('final')) thru='F';
+
+      // Tee time from official hardcoded schedule
+      const teeTime=OFFICIAL_TEE_TIMES[currentRd]?.[name]||'';
 
       espnData[name.toLowerCase()]={
         name,
