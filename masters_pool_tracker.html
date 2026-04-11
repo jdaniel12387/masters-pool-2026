@@ -386,72 +386,45 @@ function parseESPN(data){
       });
 
       // ── Thru & Tee Time ──────────────────────────────────────────
-      // CONFIRMED: thru and teeTime are inside each linescore's statistics
-      // linescores[0] = Round 1, linescores[1] = Round 2, etc.
-      // Inside each: statistics.categories[0].stats = array of stat values
-      // stats order: [holes_completed, ?, ?, ?, ?, ?, thru_holes, total_holes, tee_time_string]
       let thru='';
       let teeTime='';
       const statusDesc=(c.status?.type?.description||c.status?.type?.name||'').trim();
 
-      // Get the current round's linescore entry (period matches round number)
-      const currentLs=(c.linescores||[]).find(ls=>parseInt(ls.period)===currentRd);
-      if(currentLs){
-        // Extract stats from nested structure: statistics.categories[0].stats
-        const stats=currentLs.statistics?.categories?.[0]?.stats||[];
-        // Find thru — look for a stat with a small integer value (holes played, 1-18)
-        // and tee time — look for a stat with a date string
-        stats.forEach(s=>{
+      function extractTeeTime(stats){
+        for(const s of stats){
           const dv=(s.displayValue||'').trim();
-          // Tee time stat: contains a date string like "Thu Apr 09 09:19:00 PDT 2026"
-          if(dv.includes('PDT')||dv.includes('EDT')||dv.includes('PST')||dv.includes('EST')||dv.includes('CDT')||dv.includes('CST')){
+          if(dv.match(/\b(PDT|EDT|PST|EST|CDT|CST|MDT|MST)\b/)){
             try{
               const d=new Date(dv);
-              if(!isNaN(d)){
-                teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Chicago'})+' CT';
-              }
-            }catch(e){ teeTime=dv; }
+              if(!isNaN(d)) return d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Chicago'})+' CT';
+            }catch(e){}
           }
-          // Thru stat: a number between 1-18 representing holes completed
-          const n=parseInt(dv);
-          if(!isNaN(n)&&n>=1&&n<=18&&!thru&&dv===String(n)){
-            thru=String(n);
-          }
-        });
-      }
-
-      // Check if player finished (all 18 holes)
-      if(thru==='18'||statusDesc.toLowerCase().includes('final')) thru='F';
-
-      // Also try top-level statistics array as fallback
-      if(!teeTime||!thru){
-        (c.statistics||[]).forEach(s=>{
-          const dv=(s.displayValue||'').trim();
-          if(!teeTime&&(dv.includes('PDT')||dv.includes('EDT')||dv.includes('CDT')||dv.includes('CST'))){
-            try{const d=new Date(dv);if(!isNaN(d))teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Chicago'})+' CT';}catch(e){}
-          }
-          const n=parseInt(dv);
-          if(!thru&&!isNaN(n)&&n>=1&&n<=18) thru=String(n);
-        });
-      }
-
-      // Final fallback: scan ALL linescores for current round tee time
-      if(!teeTime){
-        for(const ls of (c.linescores||[])){
-          if(parseInt(ls.period)!==currentRd) continue;
-          const stats2=ls.statistics?.categories?.[0]?.stats||[];
-          for(const s of stats2){
-            const dv=(s.displayValue||'').trim();
-            if(dv.includes('PDT')||dv.includes('EDT')||dv.includes('PST')||dv.includes('EST')||dv.includes('CDT')||dv.includes('CST')){
-              try{
-                const d=new Date(dv);
-                if(!isNaN(d)){teeTime=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Chicago'})+' CT';break;}
-              }catch(e){}
-            }
-          }
-          if(teeTime) break;
         }
+        return '';
       }
+
+      function extractThru(stats){
+        for(const s of stats){
+          const dv=(s.displayValue||'').trim();
+          const n=parseInt(dv);
+          if(!isNaN(n)&&n>=1&&n<=18&&dv===String(n)) return String(n);
+        }
+        return '';
+      }
+
+      // ONLY use current round's linescore — never pull from a previous round
+      const currentLs=(c.linescores||[]).find(ls=>parseInt(ls.period)===currentRd);
+      if(currentLs){
+        const stats=currentLs.statistics?.categories?.[0]?.stats||[];
+        teeTime=extractTeeTime(stats);
+        thru=extractThru(stats);
+        // Only show thru if the round score exists (player has actually started)
+        if(rdScores[currentRd]===undefined) thru='';
+      }
+      // If current round linescore doesn't exist yet = round hasn't started
+      // Leave teeTime and thru blank — ESPN will populate when round starts
+
+      if(thru==='18'||statusDesc.toLowerCase().includes('final')) thru='F';
 
       espnData[name.toLowerCase()]={
         name,
@@ -471,13 +444,17 @@ function parseESPN(data){
     const debugEl=document.getElementById('debug-output');
     if(debugEl&&comps.length>0){
       const c0=comps[0];
-      const statsNames=(c0.statistics||[]).map(s=>`${s.name||s.abbreviation||s.displayName}="${s.displayValue}"`).join(', ');
+      const lsInfo=(c0.linescores||[]).map(ls=>{
+        const stats=ls.statistics?.categories?.[0]?.stats||[];
+        const tee=stats.find(s=>(s.displayValue||'').match(/\b(PDT|EDT|CST|CDT)\b/));
+        const thruS=stats.find(s=>{const n=parseInt(s.displayValue);return !isNaN(n)&&n>=1&&n<=18&&s.displayValue===String(n);});
+        return `Rd${ls.period}(dv=${ls.displayValue},tee=${tee?.displayValue||'?'},thru=${thruS?.displayValue||'?'})`;
+      }).join(' | ');
       debugEl.style.display='block';
       debugEl.textContent=
         'Player: '+c0.athlete?.displayName+'\n'+
-        'c.score: '+c0.score+'\n'+
-        'linescores: '+JSON.stringify((c0.linescores||[]).map(ls=>({period:ls.period,dv:ls.displayValue,val:ls.value})))+'\n'+
-        'statistics fields: '+statsNames+'\n'+
+        'currentRd: '+currentRd+'\n'+
+        'linescores: '+lsInfo+'\n'+
         '---parsed rdScores: '+JSON.stringify(espnData[c0.athlete?.displayName?.toLowerCase()]?.rdScores)+'\n'+
         '---parsed thru: "'+espnData[c0.athlete?.displayName?.toLowerCase()]?.thru+'"\n'+
         '---parsed teeTime: "'+espnData[c0.athlete?.displayName?.toLowerCase()]?.teeTime+'"';
